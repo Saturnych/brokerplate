@@ -21,6 +21,20 @@ services:
     networks:
       - internal
 
+  auth:
+    build:
+      context: .
+    image: moleculer-broker
+    env_file: docker-compose.env
+    environment:
+      NODEID: authNode
+      SERVICEDIR: dist/src/services/auth
+    depends_on:
+      - nats
+      - redis
+    networks:
+      - internal
+
   posts:
     build:
       context: .

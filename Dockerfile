@@ -17,7 +17,7 @@ RUN npm run build \
 
 # Healthcheck
 RUN apk --no-cache add curl
-HEALTHCHECK --timeout=5s --interval=30s CMD curl --fail http://localhost:3000/api/v1/greeter/hello || exit 1
+HEALTHCHECK --timeout=5s --interval=30s CMD curl --fail http://localhost:3000/api/v1/greeter/health || exit 1
 
 # Start server
 CMD ["npm", "start"]

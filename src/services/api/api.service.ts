@@ -1,4 +1,4 @@
-import { ServiceBroker } from 'moleculer';
+import {ServiceBroker} from 'moleculer';
 import WebService from '../WebService';
 
 import settings from './api.settings';

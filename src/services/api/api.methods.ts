@@ -1,8 +1,6 @@
-import { IncomingMessage } from 'http';
-import { Context } from 'moleculer';
+import {IncomingMessage} from 'http';
+import {Context} from 'moleculer';
 import ApiGateway from 'moleculer-web';
-
-import { DEBUG } from '../../config/vars';
 
 export default {
 	/**

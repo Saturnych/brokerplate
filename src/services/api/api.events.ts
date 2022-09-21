@@ -1,4 +1,4 @@
-import { Context } from 'moleculer';
+import {Context} from 'moleculer';
 
 export default {
 	params: {},

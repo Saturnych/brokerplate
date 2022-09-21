@@ -9,7 +9,6 @@
  *
  */
 
-// Const Redis = require('ioredis');
 import Redis from 'ioredis';
 
 const RedisMixin = ({ key = 'redis', options } = {}) => ({

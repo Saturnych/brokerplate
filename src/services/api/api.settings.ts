@@ -1,5 +1,5 @@
-import { IncomingMessage, ServerResponse } from 'http';
-import { Context } from 'moleculer';
+import {IncomingMessage, ServerResponse} from 'http';
+import {Context} from 'moleculer';
 
 export default {
 	port: (process.env.PORT || 3000) as number,

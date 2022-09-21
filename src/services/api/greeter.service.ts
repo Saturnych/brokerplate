@@ -1,4 +1,4 @@
-import { ServiceBroker } from 'moleculer';
+import {ServiceBroker} from 'moleculer';
 import BasicService from '../BasicService';
 
 import actions from './greeter.actions';
