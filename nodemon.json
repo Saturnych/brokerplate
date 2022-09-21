@@ -1,0 +1,12 @@
+{
+  "verbose": true,
+  "delay": "1000",
+  "ignore": ["data/*", "node_modules/*"],
+  "watch": ["./*"],
+  "ext": "ts,mts,js,mjs,json,env",
+  "exec": "npm run dev:node",
+  "execMap": {
+    "mts": "ts-node {{pwd}}",
+    "mjs": "node {{pwd}}"
+  }
+}
