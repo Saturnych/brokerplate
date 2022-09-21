@@ -1,7 +1,10 @@
-import { existsSync } from 'fs';
-import { sync } from 'mkdirp';
-import { Context, Service, ServiceSchema } from 'moleculer';
+import {existsSync} from 'fs';
+import {sync} from 'mkdirp';
+import {Context, Service, ServiceSchema} from 'moleculer';
 import DbService from 'moleculer-db';
+import MongoAdapter from 'moleculer-db-adapter-mongo';
+import SqlAdapter from 'moleculer-db-adapter-sequelize';
+import Sequelize from 'sequelize';
 
 export default class Connection
 	implements Partial<ServiceSchema>, ThisType<Service>
@@ -64,21 +67,20 @@ export default class Connection
 	}
 
 	public start() {
-		if (process.env.MONGO_URI) {
-			// Mongo adapter
-			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			const MongoAdapter = require('moleculer-db-adapter-mongo');
-			this.schema.adapter = new MongoAdapter(process.env.MONGO_URI, {
-				useUnifiedTopology: true,
-			}); //
+		if (!!process.env.POSTGRES_URI) {
+			// PG adapter
+			this.schema.adapter = new SqlAdapter(process.env.POSTGRES_URI);
 			this.schema.collection = this.collection;
-		} else if (process.env.NODE_ENV === 'test') {
+		} else if (!!process.env.MONGO_URI) {
+			// Mongo adapter
+			this.schema.adapter = new MongoAdapter(process.env.MONGO_URI, {	useUnifiedTopology: true });
+			this.schema.collection = this.collection;
+		} else if (!!process.env.NODE_ENV && process.env.NODE_ENV.indexOf('test') > -1) {
 			// NeDB memory adapter for testing
 			// @ts-ignore
 			this.schema.adapter = new DbService.MemoryAdapter();
 		} else {
 			// NeDB file DB adapter
-
 			// Create data folder
 			if (!existsSync('./data')) {
 				sync('./data');
@@ -99,4 +101,5 @@ export default class Connection
 	public set _collection(value: string) {
 		this.collection = value;
 	}
+
 }

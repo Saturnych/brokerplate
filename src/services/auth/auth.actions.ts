@@ -2,7 +2,7 @@ import {Context} from 'moleculer';
 
 export default {
 	/**
-	 * Say a 'Hello' action.
+	 * Health action.
 	 *
 	 */
 	health: {
@@ -20,6 +20,7 @@ export default {
       });
     },
 	},
+
 	/**
 	 * Login a username
 	 */

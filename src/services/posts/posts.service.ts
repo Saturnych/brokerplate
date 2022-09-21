@@ -8,6 +8,13 @@ import methods from './posts.methods';
 
 export default class PostService extends DbService {
 	public constructor(public broker: ServiceBroker) {
-		super(broker, { name: 'posts', settings, hooks, actions, methods });
+		super(broker, {
+			name: 'posts',
+			model: 'Posts',
+			settings,
+			hooks,
+			actions,
+			methods
+		});
 	}
 }

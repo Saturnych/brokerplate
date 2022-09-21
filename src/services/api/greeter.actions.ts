@@ -7,7 +7,7 @@ const ActionWelcome = (name: string): string => `Welcome, ${name}`;
 
 export default {
 	/**
-	 * Say a 'Hello' action.
+	 * Health action.
 	 *
 	 */
 	health: {
@@ -25,6 +25,7 @@ export default {
       });
     },
 	},
+
 	/**
 	 * Say a 'Hello' action.
 	 *

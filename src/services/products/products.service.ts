@@ -10,6 +10,7 @@ export default class ProductsService extends DbService {
 	public constructor(public broker: ServiceBroker) {
 		super(broker, {
 			name: 'products',
+			model: 'Products',
 			settings,
 			hooks,
 			actions,
