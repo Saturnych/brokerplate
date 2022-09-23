@@ -1,6 +1,6 @@
 {
   "name": "brokerplate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Moleculer-based microservices boilerplate",
   "scripts": {
     "build": "tsc --build tsconfig.json",

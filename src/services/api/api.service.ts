@@ -6,8 +6,8 @@
  * @copyright Denis Glebko 2022
  *
  */
- 
-import {ServiceBroker} from 'moleculer';
+
+import { ServiceBroker } from 'moleculer';
 import WebService from '../WebService';
 
 import settings from './api.settings';

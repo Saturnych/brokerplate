@@ -6,5 +6,5 @@
  * @copyright Denis Glebko 2022
  *
  */
- 
+
 export const DEFAULT_CONST = 'default';

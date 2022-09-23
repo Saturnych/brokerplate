@@ -7,8 +7,8 @@
  *
  */
 
-import {IncomingMessage} from 'http';
-import {Context} from 'moleculer';
+import { IncomingMessage } from 'http';
+import { Context } from 'moleculer';
 import ApiGateway from 'moleculer-web';
 
 export default {

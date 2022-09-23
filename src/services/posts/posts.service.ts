@@ -7,7 +7,7 @@
  *
  */
 
-import {ServiceBroker} from 'moleculer';
+import { ServiceBroker } from 'moleculer';
 import DbService from '../DbService';
 
 import settings from './posts.settings';
@@ -23,7 +23,7 @@ export default class PostService extends DbService {
 			settings,
 			hooks,
 			actions,
-			methods
+			methods,
 		});
 	}
 }

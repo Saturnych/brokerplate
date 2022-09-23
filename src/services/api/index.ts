@@ -11,6 +11,6 @@ import api from './api.service';
 import greeter from './greeter.service';
 
 export default {
-  api,
-  greeter,
+	api,
+	greeter,
 };

@@ -13,8 +13,8 @@ import posts from './posts';
 import products from './products';
 
 export default {
-  lab,
-  posts,
-  products,
-  ...api
+	lab,
+	posts,
+	products,
+	...api,
 };

@@ -36,7 +36,7 @@ export default class MoleculerService extends Service {
 		} = params;
 		const eventsMask = `${this.name}.*`;
 		this.events = {
-			'**': (payload: any, sender: any, event: any) => {
+			'**': (payload: Buffer, sender: string, event: string) => {
 				//if (this.debug()) this.logger.debug(`${this.name}.events('**'): payload = ${JSON.stringify(payload)}, sender = ${sender}, event = ${event}`);
 			},
 			'node.broken': (node: any) => {
@@ -45,7 +45,10 @@ export default class MoleculerService extends Service {
 				);
 			},
 		};
-		this.events[eventsMask] = schema.events || { params: {}, handler: ()=>{} };
+		this.events[eventsMask] = schema.events || {
+			params: {},
+			handler: () => {},
+		};
 		schema.events = this.events;
 		schema.afterConnected = afterConnected;
 		schema.created = created;

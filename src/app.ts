@@ -11,4 +11,6 @@ import { NODE_ENV, APP_NAME, VERSION } from './config/vars';
 
 import broker from './broker';
 
-broker.logger.info(`++++ ${APP_NAME.toUpperCase()}.${VERSION.toUpperCase()} in '${NODE_ENV}' mode app ++++`);
+broker.logger.info(
+	`++++ ${APP_NAME.toUpperCase()}.${VERSION.toUpperCase()} in '${NODE_ENV}' mode app ++++`
+);

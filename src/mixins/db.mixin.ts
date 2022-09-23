@@ -5,13 +5,13 @@
  * @author Denis Glebko <saturnych@gmail.com>
  * @copyright Denis Glebko 2022
  *
- * @mixin DbMixin 
+ * @mixin DbMixin
  *
  */
 
-import {existsSync} from 'fs';
-import {sync} from 'mkdirp';
-import {Context, Service, ServiceSchema} from 'moleculer';
+import { existsSync } from 'fs';
+import { sync } from 'mkdirp';
+import { Context, Service, ServiceSchema } from 'moleculer';
 import DbService from 'moleculer-db';
 import MongoAdapter from 'moleculer-db-adapter-mongo';
 import SqlAdapter from 'moleculer-db-adapter-sequelize';
@@ -78,15 +78,20 @@ export default class Connection
 	}
 
 	public start() {
-		if (!!process.env.POSTGRES_URI) {
+		if (process.env.POSTGRES_URI) {
 			// PG adapter
 			this.schema.adapter = new SqlAdapter(process.env.POSTGRES_URI);
 			this.schema.collection = this.collection;
-		} else if (!!process.env.MONGO_URI) {
+		} else if (process.env.MONGO_URI) {
 			// Mongo adapter
-			this.schema.adapter = new MongoAdapter(process.env.MONGO_URI, {	useUnifiedTopology: true });
+			this.schema.adapter = new MongoAdapter(process.env.MONGO_URI, {
+				useUnifiedTopology: true,
+			});
 			this.schema.collection = this.collection;
-		} else if (!!process.env.NODE_ENV && process.env.NODE_ENV.indexOf('test') > -1) {
+		} else if (
+			!!process.env.NODE_ENV &&
+			process.env.NODE_ENV.indexOf('test') > -1
+		) {
 			// NeDB memory adapter for testing
 			// @ts-ignore
 			this.schema.adapter = new DbService.MemoryAdapter();
@@ -112,5 +117,4 @@ export default class Connection
 	public set _collection(value: string) {
 		this.collection = value;
 	}
-
 }

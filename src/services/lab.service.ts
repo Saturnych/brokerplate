@@ -24,8 +24,13 @@ export default class LabService extends Service {
 				apiKey: LAB_APIKEY,
 			},
 			events: {
-				'**': (payload: any, sender: any, event: any) => {
-					if (DEBUG) this.logger.debug(`${this.name}.events('**'): payload = ${JSON.stringify(payload).length}, sender = ${sender}, event = ${event}`);
+				'**': (payload: Buffer, sender: string, event: string) => {
+					if (DEBUG)
+						this.logger.debug(
+							`${this.name}.events('**'): payload = ${
+								JSON.stringify(payload).length
+							}, sender = ${sender}, event = ${event}`
+						);
 				},
 			},
 		};

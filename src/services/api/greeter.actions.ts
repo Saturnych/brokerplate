@@ -7,7 +7,7 @@
  *
  */
 
-import {Context} from 'moleculer';
+import { Context } from 'moleculer';
 
 const ActionHello = (ctx: Context): string =>
 	'Hello Moleculer: ' + JSON.stringify(ctx.params);
@@ -25,14 +25,15 @@ export default {
 			path: '/health',
 		},
 		handler: async (ctx: Context): Promise<string> => {
-      if (ctx.service.debug()) ctx.service.logger.info('greeter.health()');
-      return JSON.stringify({
-        name: ctx.service.initial().name,
-        state: ctx.service.state(),
-        uptime: process && process.uptime(),
-        timestamp: Date.now(),
-      });
-    },
+			if (ctx.service.debug())
+				ctx.service.logger.info('greeter.health()');
+			return JSON.stringify({
+				name: ctx.service.initial().name,
+				state: ctx.service.state(),
+				uptime: process && process.uptime(),
+				timestamp: Date.now(),
+			});
+		},
 	},
 
 	/**
@@ -56,7 +57,11 @@ export default {
 			name: 'string',
 		},
 		handler: async (ctx: Context<{ name: string }>): Promise<string> => {
-			if (ctx.service.debug()) ctx.service.logger.info('greeter.welcome() ctx.params:', JSON.stringify(ctx.params));
+			if (ctx.service.debug())
+				ctx.service.logger.info(
+					'greeter.welcome() ctx.params:',
+					JSON.stringify(ctx.params)
+				);
 			return ActionWelcome(ctx.params.name);
 		},
 	},

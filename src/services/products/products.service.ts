@@ -7,7 +7,7 @@
  *
  */
 
-import {ServiceBroker} from 'moleculer';
+import { ServiceBroker } from 'moleculer';
 import DbService from '../DbService';
 
 import settings from './products.settings';
