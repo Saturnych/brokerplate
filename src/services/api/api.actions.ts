@@ -11,11 +11,16 @@ import { Context } from 'moleculer';
 
 import { VERSION } from '../../config/vars';
 
-export type HealthData = {
+export type ApiHealthData = {
 	name: string;
 	state: string;
 	timestamp: number;
 	uptime?: number;
+};
+
+export type ApiTestData = {
+	authPing: string | unknown;
+	redisKeysCount?: number;
 };
 
 export default {
@@ -30,7 +35,7 @@ export default {
 			path: '/health',
 		},
 		params: {},
-		handler: async (ctx: Context): Promise<HealthData> => {
+		handler: async (ctx: Context): Promise<ApiHealthData> => {
 			if (ctx.service.debug())
 				ctx.service.logger.info('api.health()');
 			return {
@@ -38,6 +43,32 @@ export default {
 				state: ctx.service.state(),
 				timestamp: Date.now(),
 				uptime: process && process.uptime(),
+			};
+		},
+	},
+
+	/**
+	 * Test action.
+	 *
+	 */
+	test: {
+		version: VERSION,
+		rest: {
+			method: 'GET',
+			path: '/test',
+		},
+		params: {},
+		handler: async (ctx: Context): Promise<ApiTestData> => {
+			if (ctx.service.debug())
+				ctx.service.logger.info('api.test()');
+	    const authPing: string = `${(await ctx.call(`${ctx.service.version}.auth.ping`))}`;
+			const redisKeys: Array<any> = [].concat(await ctx.call(`${ctx.service.version}.auth.keys`));
+	    const redisKeysCount: number = redisKeys.length;
+	    //const userPing = await ctx.call(`${ctx.service.version}.user.ping`);
+	    //const userCount = await ctx.call(`${ctx.service.version}.user.count`);
+	    return {
+				authPing,
+				redisKeysCount,
 			};
 		},
 	},

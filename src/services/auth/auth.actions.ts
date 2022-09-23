@@ -13,6 +13,26 @@ import { VERSION } from '../../config/vars';
 
 export default {
 	/**
+	 * Ping action.
+	 *
+	 */
+	ping: {
+		version: VERSION,
+		params: {},
+		handler: async (ctx: Context): Promise<string | unknown> => (await ctx.service.redis?.ping()),
+	},
+
+	/**
+	 * Keys action.
+	 *
+	 */
+	keys: {
+		version: VERSION,
+		params: {},
+		handler: async (ctx: Context): Promise<Array<any> | unknown> => (await ctx.service.redis?.keys('*')),
+	},
+
+ /**
 	 * Login a username
 	 */
 	login: {
