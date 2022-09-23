@@ -11,29 +11,31 @@ import { Context, Service, ServiceBroker, ServiceSchema } from 'moleculer';
 
 import { DEBUG, VERSION } from '../config/vars';
 
-const defaultEvent = (service: Service) => {
+const defaultEvent = (service: Service, state: string = '') => {
 	if (service.debug()) {
 		service.logger?.info(`${service.name} event emitted`);
 	}
+	service.state(state);
 };
 
 export default class MoleculerService extends Service {
-	public _debug: boolean = DEBUG;
-	public _initial: Record<string, any> = {};
-	public _state = 'down';
-	public name = 'service';
+	protected _debug: boolean = DEBUG;
+	protected _initial: Record<string, any> = {};
+	protected _state: string = 'down';
+	public name: string = 'service';
 
 	public constructor(params: any) {
 		super(params.broker);
 		this.name = params.name;
 		const {
 			broker,
-			afterConnected = defaultEvent(this),
+			stopped = defaultEvent(this, 'down'),
 			created = defaultEvent(this),
 			started = defaultEvent(this),
-			stopped = defaultEvent(this),
+			afterConnected = defaultEvent(this),
 			...schema
 		} = params;
+		this.state('up');
 		const eventsMask = `${this.name}.*`;
 		this.events = {
 			'**': (payload: Buffer, sender: string, event: string) => {
@@ -68,8 +70,8 @@ export default class MoleculerService extends Service {
 		return this._initial;
 	}
 
-	public state(st = ''): string {
-		if (st) {
+	public state(st: string = ''): string {
+		if (!!st) {
 			this._state = st;
 		}
 		return this._state;

@@ -17,7 +17,7 @@
     "clean": "gts clean",
     "fix": "gts fix ./src/**/*.ts",
     "lint": "gts lint ./src/**/*.ts",
-    "dc:up": "docker-compose up --build -d --scale api=1",
+    "dc:up": "docker-compose up --build -d",
     "dc:logs": "docker-compose logs -f",
     "dc:down": "docker-compose down"
   },

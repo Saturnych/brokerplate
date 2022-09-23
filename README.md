@@ -18,7 +18,7 @@ In the terminal, try the following commands:
 
 ## Services
 - **api**: API Gateway services.
-- **greeter**: Sample service with `health`, `hello`, `welcome` actions.
+- **greeter**: Sample service with `hello` & `welcome` actions.
 - **auth**: Sample Auth service.
 - **posts**: Sample DB service.
 - **products**: Sample DB service.
