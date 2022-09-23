@@ -13,7 +13,7 @@ import { VERSION } from '../../config/vars';
 
 export default {
 	/**
-	 * The 'moleculer-db' mixin registers the following actions:
+	 * Default REST actions:
 	 *  - list
 	 *  - find
 	 *  - count
