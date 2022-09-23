@@ -9,6 +9,8 @@
 
 import { Context, Service, ServiceBroker, ServiceSchema } from 'moleculer';
 
+import { monitorEventLoopDelay } from 'perf_hooks';
+
 import { DEBUG, VERSION } from '../config/vars';
 
 const defaultEvent = (service: Service, state: string = '') => {
@@ -20,8 +22,9 @@ const defaultEvent = (service: Service, state: string = '') => {
 
 export default class MoleculerService extends Service {
 	protected _debug: boolean = DEBUG;
-	protected _initial: Record<string, any> = {};
 	protected _state: string = 'down';
+	protected _initial: Record<string, any> = {};
+	protected _perfhook: Record<string, any> = monitorEventLoopDelay({ resolution: 20 });
 	public name: string = 'service';
 
 	public constructor(params: any) {
@@ -38,18 +41,10 @@ export default class MoleculerService extends Service {
 		this.state('up');
 		const eventsMask = `${this.name}.*`;
 		this.events = {
-			'**': (payload: Buffer, sender: string, event: string) => {
-				//if (this.debug()) this.logger.debug(`${this.name}.events('**'): payload = ${JSON.stringify(payload)}, sender = ${sender}, event = ${event}`);
-			},
-			'node.broken': (node: any) => {
-				this.logger.warn(
-					`${this.name}: '${node.id}' node is disconnected!`
-				);
-			},
-		};
-		this.events[eventsMask] = schema.events || {
-			params: {},
-			handler: () => {},
+			[eventsMask]: schema.events || {
+				params: {},
+				handler: () => {},
+			}
 		};
 		schema.events = this.events;
 		schema.afterConnected = afterConnected;
@@ -69,6 +64,11 @@ export default class MoleculerService extends Service {
 	public initial(): Record<string, any> {
 		return this._initial;
 	}
+
+	public perfhook(): Record<string, any> {
+		this._perfhook = monitorEventLoopDelay({ resolution: 20 });
+		return this._perfhook;
+  }
 
 	public state(st: string = ''): string {
 		if (!!st) {

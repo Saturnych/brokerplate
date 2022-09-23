@@ -32,6 +32,11 @@ export default class LabService extends Service {
 							}, sender = ${sender}, event = ${event}`
 						);
 				},
+				'node.broken': (node: any) => {
+					this.logger.warn(
+						`${name}.events('node.broken'): '${node.id}' node is disconnected!`
+					);
+				},
 			},
 		};
 		this.parseServiceSchema(schema);

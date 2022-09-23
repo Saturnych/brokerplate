@@ -11,11 +11,14 @@ import { Context } from 'moleculer';
 
 import { VERSION } from '../../config/vars';
 
+import { getPerfhookInfo } from '../../utils';
+
 export type ApiHealthData = {
 	name: string;
 	state: string;
 	timestamp: number;
 	uptime?: number;
+	perfhook?: Record<string, any>;
 };
 
 export type ApiTestData = {
@@ -43,6 +46,7 @@ export default {
 				state: ctx.service.state(),
 				timestamp: Date.now(),
 				uptime: process && process.uptime(),
+				perfhook: getPerfhookInfo(ctx.service.perfhook()),
 			};
 		},
 	},
