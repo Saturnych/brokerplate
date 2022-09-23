@@ -22,7 +22,7 @@ In the terminal, try the following commands:
 - **auth**: Sample Auth service.
 - **posts**: Sample DB service.
 - **products**: Sample DB service.
-- **lab**: Moleculer's Laboratory service. Based on [@moleculer/lab](https://moleculer.services/laboratory/introduction.html)
+- **lab**: Moleculer's Laboratory service. Based on [@moleculer/lab](https://moleculer.services/laboratory/introduction.html) & [article](https://medium.com/moleculer/moleculers-laboratory-b3262cc3b39e)
 
 ## Mixins
 - **db.mixin**: Database access mixin for services. Based on [moleculer-db](https://github.com/moleculerjs/moleculer-db#readme)
