@@ -39,12 +39,12 @@ import { DEBUG } from './src/config/vars';
  *    }
  *  }
  */
- 
+
 const brokerConfig: BrokerOptions = {
 	// Namespace of nodes to segment your nodes on the same network.
 	namespace: process.env.NAMESPACE || 'broker',
 	// Unique node identifier. Must be unique in a namespace.
-	nodeID: process.env.NODEID ? `${process.env.NODEID}.${v4()}` : null,
+	nodeID: !!process.env.NODEID ? process.env.NODEID : null, // `${process.env.NODEID}.${v4()}`
 	// Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
 	metadata: {
 		region: 'eu-west1',
