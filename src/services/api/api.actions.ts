@@ -65,9 +65,9 @@ export default {
 		handler: async (ctx: Context): Promise<ApiTestData> => {
 			if (ctx.service.debug())
 				ctx.service.logger.info('api.test()');
-	    const authPing: string = `${(await ctx.call(`${ctx.service.version}.auth.ping`))}`;
-			const redisKeys: Array<any> = [].concat(await ctx.call(`${ctx.service.version}.auth.keys`));
-	    const redisKeysCount: number = redisKeys.length;
+	    const authPing: string | undefined = await ctx.call(`${ctx.service.version}.auth.ping`);
+			const redisKeys: Array<any> | undefined = await ctx.call(`${ctx.service.version}.auth.keys`);
+	    const redisKeysCount: number = redisKeys?.length || 0;
 	    //const userPing = await ctx.call(`${ctx.service.version}.user.ping`);
 	    //const userCount = await ctx.call(`${ctx.service.version}.user.count`);
 	    return {
