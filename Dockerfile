@@ -1,7 +1,7 @@
 FROM node:lts-alpine
 
 # Working directory
-WORKDIR /dist
+WORKDIR /app
 
 # Install dependencies
 COPY package.json package-lock.json ./

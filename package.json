@@ -4,18 +4,20 @@
   "description": "Moleculer-based microservices boilerplate",
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "compile": "rm -rf build || true; tsc",
-    "dev:tsnode": "ts-node ./node_modules/moleculer/bin/moleculer-runner.js --instances=max --env --hot --repl --config moleculer.config.ts src/services/**/*.service.ts",
-    "dev:node": "node -r ts-node/register ./node_modules/moleculer/bin/moleculer-runner.js --instances=1 --env --hot --repl --config moleculer.config.ts src/services/**/*.service.ts",
+    "compile": "rm -rf dist || true; tsc --build tsconfig.json",
+    "dev:tsrunner": "ts-node ./node_modules/moleculer/bin/moleculer-runner.js --env --hot --repl --instances=1 --config moleculer.config.ts src/services/**/*.service.ts",
+    "dev:runner": "node -r ts-node/register ./node_modules/moleculer/bin/moleculer-runner.js --config moleculer.config.ts src/services/**/*.service.ts",
+    "dev:app": "node -r ts-node/register ./src/app.ts",
     "dev": "nodemon",
-    "start": "moleculer-runner --instances=1 --config dist/moleculer.config.js",
+    "start:runner": "moleculer-runner --config dist/moleculer.config.js",
+    "start": "node ./dist/src/app.js",
     "cli": "moleculer connect NATS",
     "ci": "jest --watch",
     "test": "jest --coverage",
     "clean": "gts clean",
     "fix": "gts fix ./src/**/*.ts",
     "lint": "gts lint ./src/**/*.ts",
-    "dc:up": "docker-compose up --build -d",
+    "dc:up": "docker-compose up --build -d --scale api=1",
     "dc:logs": "docker-compose logs -f",
     "dc:down": "docker-compose down"
   },
@@ -50,6 +52,7 @@
     "ts-node": "^8.8.1"
   },
   "dependencies": {
+    "@moleculer/lab": "^0.6.2",
     "@types/mkdirp": "^1.0.2",
     "@types/node": "^18.7.18",
     "@types/uuid": "^8.3.4",

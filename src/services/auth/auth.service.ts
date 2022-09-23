@@ -1,9 +1,17 @@
+/**
+ * Copyright (c) 2022
+ *
+ * @summary Moleculer API
+ * @author Denis Glebko <saturnych@gmail.com>
+ * @copyright Denis Glebko 2022
+ *
+ */
+
 import {ServiceBroker} from 'moleculer';
 import BasicService from '../BasicService';
 
 import redis from '../../mixins/redis.mixin';
 import actions from './auth.actions';
-import events from './auth.events';
 
 import { DEBUG, REDIS_HOST, REDIS_PORT, REDIS_USER, REDIS_PASSWORD, REDIS_DB_INDEX } from '../../config/vars';
 
@@ -23,7 +31,6 @@ export default class AuthService extends BasicService {
 		super(broker, {
 			name: 'auth',
 			mixins,
-			events,
 			actions
 		});
 	}

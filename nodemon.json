@@ -4,7 +4,7 @@
   "ignore": ["data/*", "node_modules/*"],
   "watch": ["./*"],
   "ext": "ts,mts,js,mjs,json,env",
-  "exec": "npm run dev:node",
+  "exec": "npm run dev:app",
   "execMap": {
     "mts": "ts-node {{pwd}}",
     "mjs": "node {{pwd}}"

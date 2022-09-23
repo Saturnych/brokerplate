@@ -7,6 +7,6 @@
  *
  */
 
-export default {
-	before: {},
-};
+import posts from './posts.service';
+
+export default posts;

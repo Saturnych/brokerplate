@@ -1,4 +1,13 @@
-import { ServiceBroker } from 'moleculer';
+/**
+ * Copyright (c) 2022
+ *
+ * @summary Moleculer API
+ * @author Denis Glebko <saturnych@gmail.com>
+ * @copyright Denis Glebko 2022
+ *
+ */
+
+import {ServiceBroker} from 'moleculer';
 import DbService from '../DbService';
 
 import settings from './products.settings';

@@ -6,9 +6,9 @@ kind: ConfigMap
 metadata:
   name: common-env
 data:
-  NAMESPACE: ""
+  NAMESPACE: KuberBroker
   LOGLEVEL: info
-  SERVICEDIR: dist/services
+  SERVICEDIR: app/dist/src/services
   TRANSPORTER: nats://nats:4222
   CACHER: redis://redis:6379
   MONGO_URI: mongodb://mongo/moleculer-typescript
@@ -38,7 +38,7 @@ metadata:
   name: ingress
 spec:
   rules:
-  - host: moleculer-typescript.127.0.0.1.nip.io
+  - host: api.127.0.0.1.nip.io
     http:
       paths:
       - path: /
@@ -66,7 +66,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: moleculer-typescript
+        image: api
         envFrom:
         - configMapRef:
             name: common-env
@@ -80,31 +80,59 @@ spec:
 
 ---
 #########################################################
-# Greeter service
+# Auth service
 #########################################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: greeter
+  name: auth
 spec:
   selector:
     matchLabels:
-      app: greeter
+      app: auth
   replicas: 2
   template:
     metadata:
       labels:
-        app: greeter
+        app: auth
     spec:
       containers:
-      - name: greeter
-        image: moleculer-typescript
+      - name: auth
+        image: auth
         envFrom:
         - configMapRef:
             name: common-env
         env:
           - name: SERVICES
-            value: greeter
+            value: auth
+
+---
+#########################################################
+# Posts service
+#########################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts
+spec:
+  selector:
+    matchLabels:
+      app: posts
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: posts
+    spec:
+      containers:
+      - name: posts
+        image: posts
+        envFrom:
+        - configMapRef:
+            name: common-env
+        env:
+          - name: SERVICES
+            value: posts
 
 ---
 #########################################################
@@ -126,7 +154,7 @@ spec:
     spec:
       containers:
       - name: products
-        image: moleculer-typescript
+        image: products
         envFrom:
         - configMapRef:
             name: common-env

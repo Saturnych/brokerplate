@@ -1,3 +1,5 @@
+require('@moleculer/lab');
+
 import {
 	LogLevels,
 	LoggerConfig,
@@ -6,7 +8,9 @@ import {
 	MetricRegistry,
 	ServiceBroker,
 } from 'moleculer';
-import { v4 } from 'uuid';
+import {v4} from 'uuid';
+import {config} from 'dotenv';
+config();
 
 import { DEBUG } from './src/config/vars';
 
@@ -35,11 +39,12 @@ import { DEBUG } from './src/config/vars';
  *    }
  *  }
  */
+ 
 const brokerConfig: BrokerOptions = {
 	// Namespace of nodes to segment your nodes on the same network.
 	namespace: process.env.NAMESPACE || 'broker',
 	// Unique node identifier. Must be unique in a namespace.
-	nodeID: process.env.NODEID ? `${process.env.NODEID}.${v4}` : null,
+	nodeID: process.env.NODEID ? `${process.env.NODEID}.${v4()}` : null,
 	// Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
 	metadata: {
 		region: 'eu-west1',
@@ -48,7 +53,7 @@ const brokerConfig: BrokerOptions = {
 	uidGenerator: v4,
 
 	// Enable/disable logging or use custom logger. More info: https://moleculer.services/docs/0.14/logging.html
-	// Available logger types: 'Console', 'File', 'Pino', 'Winston', 'Bunyan', 'debug', 'Log4js', 'Datadog'
+	// Available logger types: 'Console', 'File', 'Pino', 'Winston', 'Bunyan', 'debug', 'Log4js', 'Datadog', 'Laboratory'
 	logger:
 		String(process.env.LOGGER) === 'true'
 			? ([
@@ -67,6 +72,7 @@ const brokerConfig: BrokerOptions = {
 							autoPadding: false,
 						},
 					},
+					'Laboratory',
 			  ] as LoggerConfig[])
 			: ({} as LoggerConfig),
 	// Default log level for built-in console logger. It can be overwritten in logger options above.
@@ -86,13 +92,14 @@ const brokerConfig: BrokerOptions = {
 	cacher: {
 		type:
 			!!process.env.CACHER && process.env.CACHER.indexOf('redis:') > -1
-				? process.env.CACHER
+				? 'Redis'
 				: 'Memory',
 		options: {
 			prefix: 'MOL',
 			maxParamsLength: 100,
 			ttl: 300, // 30 seconds
 			monitor: false, // Turns Redis client monitoring off
+			url: process.env.CACHER?.indexOf('redis:') > -1 ? process.env.CACHER : null,
 		},
 	},
 
@@ -193,19 +200,7 @@ const brokerConfig: BrokerOptions = {
 	tracing: {
 		enabled: !!process.env.TRACING,
 		// Available built-in exporters: 'Console', 'Datadog', 'Event', 'EventLegacy', 'Jaeger', 'Zipkin', 'Laboratory'
-		exporter: {
-			type: process.env.TRACING, // Console exporter is only for development!
-			options: {
-				// Custom logger
-				logger: null,
-				// Using colors
-				colors: true,
-				// Width of row
-				width: 100,
-				// Gauge width in the row
-				gaugeWidth: 40,
-			},
-		},
+		exporter: process.env.TRACING, // Console exporter is only for development!
 	},
 
 	// Register custom middlewares

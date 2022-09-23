@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2022
+ *
+ * @summary Moleculer API
+ * @author Denis Glebko <saturnych@gmail.com>
+ * @copyright Denis Glebko 2022
+ *
+ * @mixin DbMixin 
+ *
+ */
+
 import {existsSync} from 'fs';
 import {sync} from 'mkdirp';
 import {Context, Service, ServiceSchema} from 'moleculer';

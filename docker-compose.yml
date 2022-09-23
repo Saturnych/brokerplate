@@ -2,14 +2,33 @@ version: "3.3"
 
 services:
 
+  lab:
+    build:
+      context: .
+    image: lab
+    env_file: docker-compose.env
+    environment:
+      NODEID: labNode
+      SERVICES: lab.service
+      PORT: 3210
+    depends_on:
+      api:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=false"
+      - "traefik.http.routers.api-gw.rule=PathPrefix(`/`)"
+      - "traefik.http.services.api-gw.loadbalancer.server.port=3210"
+    networks:
+      - internal
+
   api:
     build:
       context: .
-    image: moleculer-broker
+    image: api
     env_file: docker-compose.env
     environment:
       NODEID: apiNode
-      SERVICEDIR: dist/src/services/api
+      SERVICEDIR: app/dist/src/services/api
       PORT: 3000
     healthcheck:
       test: ['CMD-SHELL', 'curl --fail http://localhost:3000/api/v1/greeter/health || exit 1']
@@ -31,11 +50,11 @@ services:
   auth:
     build:
       context: .
-    image: moleculer-broker
+    image: auth
     env_file: docker-compose.env
     environment:
       NODEID: authNode
-      SERVICEDIR: dist/src/services/auth
+      SERVICEDIR: app/dist/src/services/auth
     depends_on:
         api:
           condition: service_healthy
@@ -49,11 +68,11 @@ services:
   posts:
     build:
       context: .
-    image: moleculer-broker
+    image: posts
     env_file: docker-compose.env
     environment:
       NODEID: postsNode
-      SERVICEDIR: dist/src/services/posts
+      SERVICEDIR: app/dist/src/services/posts
     depends_on:
         postgres:
           condition: service_healthy
@@ -67,11 +86,11 @@ services:
   products:
     build:
       context: .
-    image: moleculer-broker
+    image: products
     env_file: docker-compose.env
     environment:
       NODEID: productsNode
-      SERVICEDIR: dist/src/services/products
+      SERVICEDIR: app/dist/src/services/products
     depends_on:
         postgres:
           condition: service_healthy
@@ -123,6 +142,7 @@ services:
     ports:
       - 3000:80
       - 3001:8080
+      #- 3210:3210
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:

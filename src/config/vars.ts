@@ -1,9 +1,28 @@
-export const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n);
+/**
+ * Copyright (c) 2022
+ *
+ * @summary Moleculer API
+ * @author Denis Glebko <saturnych@gmail.com>
+ * @copyright Denis Glebko 2022
+ *
+ */
+ 
+import {config} from 'dotenv';
+config();
 
-export const DEBUG: boolean =
-	!!process.env.NODE_ENV && process.env.NODE_ENV.indexOf('dev') > -1;
+import {isNumeric} from '../utils';
 
+export const NODE_ENV: string = process.env.NODE_ENV || '';
+export const DEV_MODE: boolean = !!NODE_ENV && NODE_ENV.indexOf('dev') > -1;
+export const DEBUG: boolean = !!DEV_MODE;
+
+// // Moleculer
+export const SERVICEDIR: string = process.env.SERVICEDIR || '';
+export const SERVICES: string = process.env.SERVICES || '';
+export const APP_NAME: string = process.env.APP_NAME || 'app';
 export const VERSION: string = process.env.VERSION || 'v0';
+export const LAB_TOKEN: string = process.env.LAB_TOKEN || '';
+export const LAB_APIKEY: string = process.env.LAB_APIKEY || '';
 
 // // Redis
 export const REDIS_HOST = process.env.REDIS_HOST || '';
