@@ -9,31 +9,14 @@
 
 import { Context } from 'moleculer';
 
-export default {
-	/**
-	 * Health action.
-	 *
-	 */
-	health: {
-		rest: {
-			method: 'GET',
-			path: '/health',
-		},
-		handler: async (ctx: Context): Promise<string> => {
-			if (ctx.service.debug()) ctx.service.logger.info('auth.health()');
-			return JSON.stringify({
-				name: ctx.service.initial().name,
-				state: ctx.service.state(),
-				uptime: process && process.uptime(),
-				timestamp: Date.now(),
-			});
-		},
-	},
+import { VERSION } from '../../config/vars';
 
+export default {
 	/**
 	 * Login a username
 	 */
 	login: {
+		version: VERSION,
 		rest: {
 			method: 'POST',
 			path: '/login',

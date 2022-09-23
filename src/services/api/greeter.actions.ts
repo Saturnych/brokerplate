@@ -9,6 +9,8 @@
 
 import { Context } from 'moleculer';
 
+import { VERSION } from '../../config/vars';
+
 const ActionHello = (ctx: Context): string =>
 	'Hello Moleculer: ' + JSON.stringify(ctx.params);
 
@@ -20,6 +22,7 @@ export default {
 	 *
 	 */
 	hello: {
+		version: VERSION,
 		rest: {
 			method: 'GET',
 			path: '/hello',
@@ -31,6 +34,7 @@ export default {
 	 * Welcome, a username
 	 */
 	welcome: {
+		version: VERSION,
 		rest: '/welcome',
 		params: {
 			name: 'string',

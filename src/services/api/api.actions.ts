@@ -9,6 +9,8 @@
 
 import { Context } from 'moleculer';
 
+import { VERSION } from '../../config/vars';
+
 export type HealthData = {
 	name: string;
 	state: string;
@@ -22,10 +24,12 @@ export default {
 	 *
 	 */
 	health: {
+		version: VERSION,
 		rest: {
 			method: 'GET',
 			path: '/health',
 		},
+		params: {},
 		handler: async (ctx: Context): Promise<HealthData> => {
 			if (ctx.service.debug())
 				ctx.service.logger.info('api.health()');

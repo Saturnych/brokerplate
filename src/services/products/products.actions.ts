@@ -9,6 +9,8 @@
 
 import { Context } from 'moleculer';
 
+import { VERSION } from '../../config/vars';
+
 export default {
 	/**
 	 * The 'moleculer-db' mixin registers the following actions:
@@ -24,6 +26,7 @@ export default {
 	 * Increase the quantity of the product item.
 	 */
 	increaseQuantity: {
+		version: VERSION,
 		rest: 'PUT /:id/quantity/increase',
 		params: {
 			id: 'string',
@@ -42,6 +45,7 @@ export default {
 	 * Decrease the quantity of the product item.
 	 */
 	decreaseQuantity: {
+		version: VERSION,
 		rest: 'PUT /:id/quantity/decrease',
 		params: {
 			id: 'string',
