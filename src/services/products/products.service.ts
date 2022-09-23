@@ -16,10 +16,10 @@ import actions from './products.actions';
 import methods from './products.methods';
 
 export default class ProductsService extends DbService {
-	public constructor(public broker: ServiceBroker) {
+	public constructor(public broker: ServiceBroker, public name: string = 'products') {
 		super(broker, {
-			name: 'products',
 			model: 'Products',
+			name,
 			settings,
 			hooks,
 			actions,

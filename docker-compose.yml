@@ -11,13 +11,13 @@ services:
       NODEID: labNode
       SERVICES: lab.service
       PORT: 3210
+    ports:
+      - 3210:3210
     depends_on:
       api:
         condition: service_healthy
-    labels:
-      - "traefik.enable=false"
-      - "traefik.http.routers.api-gw.rule=PathPrefix(`/`)"
-      - "traefik.http.services.api-gw.loadbalancer.server.port=3210"
+      nats:
+        condition: service_started
     networks:
       - internal
 
@@ -37,8 +37,6 @@ services:
       retries: 10
     depends_on:
         nats:
-          condition: service_started
-        redis:
           condition: service_started
     labels:
       - "traefik.enable=true"
@@ -78,8 +76,6 @@ services:
           condition: service_healthy
         nats:
           condition: service_started
-        redis:
-          condition: service_started
     networks:
       - internal
 
@@ -95,8 +91,6 @@ services:
         postgres:
           condition: service_healthy
         nats:
-          condition: service_started
-        redis:
           condition: service_started
     networks:
       - internal
@@ -142,7 +136,6 @@ services:
     ports:
       - 3000:80
       - 3001:8080
-      #- 3210:3210
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:

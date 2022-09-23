@@ -13,10 +13,10 @@ import { AgentService } from '@moleculer/lab';
 import { DEBUG, VERSION, LAB_TOKEN, LAB_APIKEY } from '../config/vars';
 
 export default class LabService extends Service {
-	public constructor(broker: ServiceBroker) {
+	public constructor(public broker: ServiceBroker, public name: string = 'lab') {
 		super(broker);
 		const schema: ServiceSchema = {
-			name: 'lab',
+			name,
 			version: VERSION,
 			mixins: [AgentService],
 			settings: {
@@ -27,7 +27,7 @@ export default class LabService extends Service {
 				'**': (payload: Buffer, sender: string, event: string) => {
 					if (DEBUG)
 						this.logger.debug(
-							`${this.name}.events('**'): payload = ${
+							`${name}.events('**'): payload = ${
 								JSON.stringify(payload).length
 							}, sender = ${sender}, event = ${event}`
 						);

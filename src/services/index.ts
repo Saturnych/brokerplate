@@ -8,12 +8,14 @@
  */
 
 import lab from './lab.service';
-import api from './api';
+import auth from './auth';
 import posts from './posts';
 import products from './products';
+import api from './api';
 
 export default {
 	lab,
+	auth,
 	posts,
 	products,
 	...api,

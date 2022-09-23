@@ -14,7 +14,7 @@ import settings from './api.settings';
 import methods from './api.methods';
 
 export default class ApiService extends WebService {
-	public constructor(broker: ServiceBroker) {
-		super(broker, { name: 'api', settings, methods });
+	public constructor(public broker: ServiceBroker, public name: string = 'api') {
+		super(broker, { name, settings, methods });
 	}
 }
