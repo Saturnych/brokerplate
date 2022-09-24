@@ -15,7 +15,7 @@ import { getPerfhookInfo } from '../utils';
 
 import { DEBUG, VERSION } from '../config/vars';
 
-const defaultEvent = (service: Service, state: string = '') => {
+const defaultEvent = (service: Service, state = '') => {
 	if (service?.debug()) {
 		service.logger?.info(`${service.name} event emitted`);
 	}
@@ -24,27 +24,21 @@ const defaultEvent = (service: Service, state: string = '') => {
 
 export default class MoleculerService extends Service {
 	protected _debug: boolean = DEBUG;
-	protected _state: string = 'down';
+	protected _state = 'down';
 	protected _initial: Record<string, any> = {};
 	protected _perfhook = monitorEventLoopDelay({ resolution: 20 });
-	public name: string = 'service';
+	public name = 'service';
 
 	public constructor(params: any) {
 		super(params.broker);
 		this.name = params.name;
-		const {
-			broker,
-			stopped,
-			created,
-			started,
-			...schema
-		} = params;
+		const { broker, stopped, created, started, ...schema } = params;
 		const eventsMask = `${this.name}.*`;
 		this.events = {
 			[eventsMask]: schema.events || {
 				params: {},
 				handler: () => {},
-			}
+			},
 		};
 		schema.events = this.events;
 		schema.created = created || this.serviceCreated;
@@ -65,35 +59,44 @@ export default class MoleculerService extends Service {
 	}
 
 	public perfhook(enabled: boolean | undefined): Record<string, any> {
-		if (String(enabled)==='true') this._perfhook.enable();
-		else if (String(enabled)==='false') this._perfhook.disable();
+		if (String(enabled) === 'true') this._perfhook.enable();
+		else if (String(enabled) === 'false') this._perfhook.disable();
 		return this._perfhook;
-  }
+	}
 
-	public state(st: string = ''): string {
-		if (!!st) this._state = st;
+	public state(st = ''): string {
+		if (st) this._state = st;
 		return this._state;
 	}
 
 	public serviceCreated() {
-    if (this._debug) this.logger.info(`+++ ${this.name}.serviceCreated()`);
-    this.state('starting');
+		if (this.debug()) this.logger.info(`+++ ${this.name}.serviceCreated()`);
+		this.state('starting');
 		const perfhook = this.perfhook(true);
-		if (this._debug) this.logger.info(`+++ ${this.name}.perfhook:`, getPerfhookInfo(perfhook));
-    return ('serviceCreated' in this.events)?this.events.serviceCreated(this):null;
-  }
+		return 'serviceCreated' in this.events
+			? this.events.serviceCreated(this)
+			: null;
+	}
 
-  public serviceStarted() {
-    if (this._debug) this.logger.info(`+++ ${this.name}.serviceStarted()`);
-    this.state('up');
-    return ('serviceStarted' in this.events)?this.events.serviceStarted(this):null;
-  }
+	public serviceStarted() {
+		if (this.debug()) this.logger.info(`+++ ${this.name}.serviceStarted()`);
+		this.state('up');
+		return 'serviceStarted' in this.events
+			? this.events.serviceStarted(this)
+			: null;
+	}
 
-  public serviceStopped() {
-    if (this._debug) this.logger.info(`--- ${this.name}.serviceStopped()`);
-    this.state('down');
+	public serviceStopped() {
+		if (this.debug()) this.logger.info(`--- ${this.name}.serviceStopped()`);
+		this.state('down');
 		const perfhook = this.perfhook(false);
-    if (this._debug) this.logger.info(`--- ${this.name}.perfhook:`, getPerfhookInfo(perfhook));
-    return ('serviceStopped' in this.events)?this.events.serviceStopped(this):null;
-  }
+		if (this.debug())
+			this.logger.info(
+				`--- ${this.name}.perfhook:`,
+				getPerfhookInfo(perfhook)
+			);
+		return 'serviceStopped' in this.events
+			? this.events.serviceStopped(this)
+			: null;
+	}
 }

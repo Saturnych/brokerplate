@@ -33,7 +33,10 @@ const options = {
 const mixins = options.host ? [redis({ options })] : [];
 
 export default class AuthService extends BasicService {
-	public constructor(public broker: ServiceBroker, public name: string = 'auth') {
+	public constructor(
+		public broker: ServiceBroker,
+		public name: string = 'auth'
+	) {
 		super(broker, {
 			name,
 			mixins,

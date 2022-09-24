@@ -16,7 +16,10 @@ import actions from './posts.actions';
 import methods from './posts.methods';
 
 export default class PostService extends DbService {
-	public constructor(public broker: ServiceBroker, public name: string = 'posts') {
+	public constructor(
+		public broker: ServiceBroker,
+		public name: string = 'posts'
+	) {
 		super(broker, {
 			model: 'Posts',
 			name,

@@ -19,7 +19,8 @@ export default {
 	ping: {
 		version: VERSION,
 		params: {},
-		handler: async (ctx: Context): Promise<string | unknown> => (await ctx.service.redis?.ping()),
+		handler: async (ctx: Context): Promise<string | unknown> =>
+			await ctx.service.redis?.ping(),
 	},
 
 	/**
@@ -29,10 +30,11 @@ export default {
 	keys: {
 		version: VERSION,
 		params: {},
-		handler: async (ctx: Context): Promise<Array<any> | unknown> => (await ctx.service.redis?.keys('*')),
+		handler: async (ctx: Context): Promise<Array<any> | unknown> =>
+			await ctx.service.redis?.keys('*'),
 	},
 
- /**
+	/**
 	 * Login a username
 	 */
 	login: {

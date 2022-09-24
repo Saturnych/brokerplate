@@ -39,8 +39,7 @@ export default {
 		},
 		params: {},
 		handler: async (ctx: Context): Promise<ApiHealthData> => {
-			if (ctx.service.debug())
-				ctx.service.logger.info('api.health()');
+			if (ctx.service.debug()) ctx.service.logger.info('api.health()');
 			return {
 				name: ctx.service.name,
 				state: ctx.service.state(),
@@ -63,18 +62,20 @@ export default {
 		},
 		params: {},
 		handler: async (ctx: Context): Promise<ApiTestData> => {
-			if (ctx.service.debug())
-				ctx.service.logger.info('api.test()');
-	    const authPing: string | undefined = await ctx.call(`${ctx.service.version}.auth.ping`);
-			const redisKeys: Array<any> | undefined = await ctx.call(`${ctx.service.version}.auth.keys`);
-	    const redisKeysCount: number = redisKeys?.length || 0;
-	    //const userPing = await ctx.call(`${ctx.service.version}.user.ping`);
-	    //const userCount = await ctx.call(`${ctx.service.version}.user.count`);
-	    return {
+			if (ctx.service.debug()) ctx.service.logger.info('api.test()');
+			const authPing: string | undefined = await ctx.call(
+				`${ctx.service.version}.auth.ping`
+			);
+			const redisKeys: Array<any> | undefined = await ctx.call(
+				`${ctx.service.version}.auth.keys`
+			);
+			const redisKeysCount: number = redisKeys?.length || 0;
+			//const userPing = await ctx.call(`${ctx.service.version}.user.ping`);
+			//const userCount = await ctx.call(`${ctx.service.version}.user.count`);
+			return {
 				authPing,
 				redisKeysCount,
 			};
 		},
 	},
-
 };

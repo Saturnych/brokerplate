@@ -13,7 +13,10 @@ import BasicService from '../BasicService';
 import actions from './greeter.actions';
 
 export default class GreeterService extends BasicService {
-	public constructor(public broker: ServiceBroker, public name: string = 'greeter') {
+	public constructor(
+		public broker: ServiceBroker,
+		public name: string = 'greeter'
+	) {
 		super(broker, { name, actions });
 	}
 }

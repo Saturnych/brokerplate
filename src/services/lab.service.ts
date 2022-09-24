@@ -13,7 +13,10 @@ import { AgentService } from '@moleculer/lab';
 import { DEBUG, VERSION, LAB_TOKEN, LAB_APIKEY } from '../config/vars';
 
 export default class LabService extends Service {
-	public constructor(public broker: ServiceBroker, public name: string = 'lab') {
+	public constructor(
+		public broker: ServiceBroker,
+		public name: string = 'lab'
+	) {
 		super(broker);
 		const schema: ServiceSchema = {
 			name,
