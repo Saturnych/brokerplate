@@ -7,20 +7,10 @@
  *
  */
 
-import { Context, Service, ServiceBroker, ServiceSchema } from 'moleculer';
-
+import { Service, ServiceSchema } from 'moleculer';
 import { monitorEventLoopDelay } from 'perf_hooks';
-
 import { getPerfhookInfo } from '../utils';
-
 import { DEBUG, VERSION } from '../config/vars';
-
-const defaultEvent = (service: Service, state = '') => {
-	if (service?.debug()) {
-		service.logger?.info(`${service.name} event emitted`);
-	}
-	service.state(state);
-};
 
 export default class MoleculerService extends Service {
 	protected _debug: boolean = DEBUG;
@@ -73,6 +63,11 @@ export default class MoleculerService extends Service {
 		if (this.debug()) this.logger.info(`+++ ${this.name}.serviceCreated()`);
 		this.state('starting');
 		const perfhook = this.perfhook(true);
+		if (this.debug())
+			this.logger.info(
+				`+++ ${this.name}.perfhook:`,
+				getPerfhookInfo(perfhook)
+			);
 		return 'serviceCreated' in this.events
 			? this.events.serviceCreated(this)
 			: null;

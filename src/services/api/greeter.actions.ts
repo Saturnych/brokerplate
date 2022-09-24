@@ -8,7 +8,6 @@
  */
 
 import { Context } from 'moleculer';
-import { ActionReturnData, returnData } from '../../types';
 import { VERSION } from '../../config/vars';
 
 const ActionHello = (ctx: Context): string =>

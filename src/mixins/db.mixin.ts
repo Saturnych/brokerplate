@@ -15,7 +15,6 @@ import { Context, Service, ServiceSchema } from 'moleculer';
 import DbService from 'moleculer-db';
 import MongoAdapter from 'moleculer-db-adapter-mongo';
 import SqlAdapter from 'moleculer-db-adapter-sequelize';
-import Sequelize from 'sequelize';
 
 export default class Connection
 	implements Partial<ServiceSchema>, ThisType<Service>
