@@ -136,13 +136,8 @@ export const isValidId = (id: string): boolean => uuidValidate(id);
  * @param {Object} data Data to be returned
  *
  */
-export const resObj = <T>(
-	obj: ActionReturnData<T> = returnData,
-	stringify = false
-): ActionReturnData<T> | string => {
-	const data: T = obj.data;
-	return stringify ? JSON.stringify({ data, ...obj }) : { data, ...obj };
-};
+export const resObj = <T>(retVal): ActionReturnData<T> =>
+	Object.assign({}, returnData, retVal);
 
 /**
  * Global error handler
@@ -166,16 +161,15 @@ export const resError = (
 	contentType = 'application/json; charset=utf-8', // text/plain
 	defaultErrorCode = 501
 ): void => {
+	if (debug) logger.error("service.onError():", error);
 	const statusCode = Number(error.code || defaultErrorCode);
-	const result: ActionReturnData<null> | string = resObj(
-		{
-			statusCode,
-			success: false,
-			message: `${error.message}`,
-		},
-		true
-	);
-	if (debug) logger.error("service.onError():", result);
+	const ret: ActionReturnData<null> = resObj<null>({
+		statusCode,
+		success: false,
+		message: `${error.message}`,
+		error: error.errno,
+	});
+	const result: string = JSON.stringify(ret);
 	res.statusCode = statusCode;
 	res.setHeader('Content-Type', contentType);
 	res.end(result);

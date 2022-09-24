@@ -8,11 +8,9 @@
  */
 
 import { Errors, Context } from 'moleculer';
-import { User, ActionReturnData, returnData } from '../../types';
+import { User } from '../../types';
 import { checkService, validateEmail } from '../../utils';
 import { VERSION } from '../../config/vars';
-
-export type AuthLoginData = ActionReturnData<User>;
 
 export default {
 	/**
@@ -52,21 +50,19 @@ export default {
 		},
 		handler: async (
 			ctx: Context<{ email: string; password: string }>
-		): Promise<AuthLoginData> => {
+		): Promise<User> => {
 			if (ctx.service.debug())
 				ctx.service.logger.info(
 					'auth.login() ctx.params:',
 					JSON.stringify(ctx.params)
 				);
 
-			if (!validateEmail(ctx.params.email)) {
-				returnData.error = new Errors.MoleculerError(
+			if (!validateEmail(ctx.params.email))
+				throw new Errors.MoleculerError(
 					'Invalid email!',
 					401,
 					'ERR_WRONGEMAIL'
 				);
-				return Promise.reject(returnData);
-			}
 
 			const services = await checkService(ctx.service.broker, 'user');
 			if (ctx.service.debug())
@@ -76,12 +72,11 @@ export default {
 				!services.user ||
 				!services.user.available
 			) {
-				returnData.error = new Errors.MoleculerError(
+				throw new Errors.MoleculerError(
 					"Service 'user' is not available!",
 					401,
 					"ERR_NOSERVICE"
 				);
-				return Promise.reject(returnData);
 			}
 
 			const userCall = await ctx.call(
@@ -96,18 +91,15 @@ export default {
 
 			const user: User = null;
 			if (user) {
-				//returnData.data = user as User;
 			} else {
-				returnData.error = new Errors.MoleculerError(
+				throw new Errors.MoleculerError(
 					"User not found!",
 					403,
 					"ERR_NOUSER"
 				);
 			}
 
-			return returnData.error
-				? Promise.reject(returnData)
-				: Promise.resolve(returnData);
+			return user;
 		},
 	},
 };

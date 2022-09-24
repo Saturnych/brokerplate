@@ -78,16 +78,21 @@ export default {
 				route: Record<string, any>,
 				req: IncomingMessage,
 				res: ServerResponse,
-				data: ActionReturnData<any>
-			): Promise<ActionReturnData<any> | string> => {
+				data: any
+			): Promise<ActionReturnData<any> | any> => {
 				if (ctx.service.debug())
 					ctx.service.logger.info(
 						'api.onAfterCall() meta:',
 						ctx.meta,
-						'result:',
 						data
 					);
-				return Promise.resolve(resObj(data));
+				const ret: ActionReturnData<any> = resObj<any>({ data });
+				return !!data.metadata ||
+					(!!data.length &&
+						(!!data[0].instanceID ||
+							data[0].name.indexOf('$node') > -1))
+					? data
+					: ret;
 			},
 
 			// Calling options. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Calling-options

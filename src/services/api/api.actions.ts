@@ -8,10 +8,8 @@
  */
 
 import { Context } from 'moleculer';
-
-import { VERSION } from '../../config/vars';
-
 import { getPerfhookInfo } from '../../utils';
+import { VERSION } from '../../config/vars';
 
 export type ApiHealthData = {
 	name: string;

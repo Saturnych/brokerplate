@@ -42,7 +42,7 @@ export interface UserView extends DbView {
 
 export type User = UserView | EntityRef | UUID | null;
 
-export interface ActionReturnData<DataType, ErrorType = Error | null> {
+export interface ActionReturnData<DataType, ErrorType = Error> {
 	statusCode: number;
 	success: boolean;
 	message: string;
@@ -51,9 +51,8 @@ export interface ActionReturnData<DataType, ErrorType = Error | null> {
 }
 
 export const returnData: ActionReturnData<null> = {
-	statusCode: null,
+	statusCode: 200,
 	success: true,
 	message: 'ok',
 	data: null,
-	error: null,
 };
