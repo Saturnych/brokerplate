@@ -9,6 +9,8 @@
 
 import { IncomingMessage, ServerResponse } from 'http';
 import { Context } from 'moleculer';
+import { ActionReturnData } from '../../types';
+import { resObj } from '../../utils';
 
 export default {
 	port: (process.env.PORT || 3000) as number,
@@ -52,9 +54,15 @@ export default {
 				res: ServerResponse
 			): Promise<void> => {
 				if (ctx.service.debug())
-					ctx.service.logger.info('api.onBeforeCall():', ctx.meta);
+					ctx.service.logger.info(
+						'api.onBeforeCall() meta:',
+						ctx.meta
+					);
 				// Set request headers to context meta
-				// ctx.meta.userAgent = req.headers['user-agent'];
+				ctx.meta = {
+					userAgent: req.headers['user-agent'],
+					...ctx.meta,
+				};
 			},
 
 			/**
@@ -70,11 +78,16 @@ export default {
 				route: Record<string, any>,
 				req: IncomingMessage,
 				res: ServerResponse,
-				data: Record<string, any>
-			): Promise<Record<string, any>> => {
+				data: ActionReturnData<any>
+			): Promise<ActionReturnData<any> | string> => {
 				if (ctx.service.debug())
-					ctx.service.logger.info('api.onAfterCall():', ctx.meta);
-				return data;
+					ctx.service.logger.info(
+						'api.onAfterCall() meta:',
+						ctx.meta,
+						'result:',
+						data
+					);
+				return Promise.resolve(resObj(data));
 			},
 
 			// Calling options. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Calling-options
@@ -83,11 +96,11 @@ export default {
 			bodyParsers: {
 				json: {
 					strict: false,
-					limit: '1MB',
+					limit: '3MB',
 				},
 				urlencoded: {
 					extended: true,
-					limit: '1MB',
+					limit: '3MB',
 				},
 			},
 

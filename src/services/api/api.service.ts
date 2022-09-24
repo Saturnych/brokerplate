@@ -7,8 +7,11 @@
  *
  */
 
+import { IncomingMessage, ServerResponse } from 'http';
 import { ServiceBroker } from 'moleculer';
 import WebService from '../WebService';
+import { resError } from '../../utils';
+import { DEBUG } from '../../config/vars';
 
 import settings from './api.settings';
 import methods from './api.methods';
@@ -19,6 +22,15 @@ export default class ApiService extends WebService {
 		public broker: ServiceBroker,
 		public name: string = 'api'
 	) {
-		super(broker, { name, settings, methods, actions });
+		super(broker, {
+			name,
+			methods,
+			actions,
+			settings: {
+				onError: (req: IncomingMessage, res: ServerResponse, err) =>
+					resError(req, res, err, broker.logger, DEBUG),
+				...settings,
+			},
+		});
 	}
 }

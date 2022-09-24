@@ -7,8 +7,10 @@
  *
  */
 
+import { IncomingMessage, ServerResponse } from 'http';
+import { Service, ServiceBroker, LoggerInstance } from 'moleculer';
 import { validate as uuidValidate } from 'uuid';
-import { Service, ServiceBroker } from 'moleculer';
+import { ActionReturnData, returnData } from '../types';
 
 const units = ['h', 'm', 's', 'ms', 'μs', 'ns'];
 const divisors = [60 * 60 * 1000, 60 * 1000, 1000, 1, 1e-3, 1e-6];
@@ -58,17 +60,26 @@ export const getPerfhookInfo = (perfhook) => ({
 });
 
 export const getServices = async (
-	broker: ServiceBroker,
-	serviceName = ''
-): Promise<Record<string, Service | Service[] | unknown> | Error> => {
+	broker: ServiceBroker
+): Promise<Service[] | any[]> => {
 	try {
-		const obj: Record<string, Service | Service[]> = {};
-		obj.services = await broker.call('$node.services');
-		if (serviceName) {
-			const service = obj.services.filter((s) => s.name == serviceName);
-			obj[serviceName] = service.length > 0 && (service[0] as Service);
-		}
-		return Promise.resolve(obj);
+		const services: Service[] = await broker.call('$node.services');
+		return Promise.resolve(services);
+	} catch (e) {
+		return Promise.reject([]);
+	}
+};
+
+export const checkService = async (
+	broker: ServiceBroker,
+	serviceName: string
+): Promise<Service | Error> => {
+	try {
+		const services = (await getServices(broker)).filter(
+			(s) => s.name == serviceName && s.available
+		);
+		if (services.length > 0) Promise.resolve(services[0]);
+		else throw new Error(`Service '${serviceName}' is not available!`);
 	} catch (e) {
 		return Promise.reject(e);
 	}
@@ -114,3 +125,58 @@ export const getRandomInt = (min: number, max: number): number => {
 export const isNumeric = (n): boolean => !isNaN(parseFloat(n)) && isFinite(n);
 
 export const isValidId = (id: string): boolean => uuidValidate(id);
+
+/**
+ * Use to simplify the http returns
+ *
+ * @function
+ * @param {Number} status HTTP Status code
+ * @param {Boolean} success Success or not
+ * @param {String} message Optional message
+ * @param {Object} data Data to be returned
+ *
+ */
+export const resObj = <T>(
+	obj: ActionReturnData<T> = returnData,
+	stringify = false
+): ActionReturnData<T> | string => {
+	const data: T = obj.data;
+	return stringify ? JSON.stringify({ data, ...obj }) : { data, ...obj };
+};
+
+/**
+ * Global error handler
+ *
+ * @param {IncomingMessage} req
+ * @param {ServerResponse} res
+ * @param {Object} err
+ * @param {Object} logger
+ * @param {Boolean} debug
+ * @param {Boolean} stringify
+ * @param {String} contentType
+ * @param {Number} defaultErrorCode
+ *
+ */
+export const resError = (
+	req: IncomingMessage,
+	res: ServerResponse,
+	error: Error | any,
+	logger: LoggerInstance | Console = console,
+	debug = false,
+	contentType = 'application/json; charset=utf-8', // text/plain
+	defaultErrorCode = 501
+): void => {
+	const statusCode = Number(error.code || defaultErrorCode);
+	const result: ActionReturnData<null> | string = resObj(
+		{
+			statusCode,
+			success: false,
+			message: `${error.message}`,
+		},
+		true
+	);
+	if (debug) logger.error("service.onError():", result);
+	res.statusCode = statusCode;
+	res.setHeader('Content-Type', contentType);
+	res.end(result);
+};
