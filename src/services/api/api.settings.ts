@@ -88,9 +88,9 @@ export default {
 					);
 				const ret: ActionReturnData<any> = resObj<any>({ data });
 				return !!data.metadata ||
-					(!!data.length &&
+					(Array.isArray(data) &&
 						(!!data[0].instanceID ||
-							data[0].name.indexOf('$node') > -1))
+							data[0].name?.indexOf('$node') > -1))
 					? data
 					: ret;
 			},
