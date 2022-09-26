@@ -10,8 +10,7 @@
 import { Context } from 'moleculer';
 import { VERSION } from '../../config/vars';
 
-const ActionHello = (ctx: Context): string =>
-	'Hello Moleculer: ' + JSON.stringify(ctx.meta);
+const ActionHello = (ctx: Context): string =>	'Hello, Moleculer!';
 
 const ActionWelcome = (name: string): string => `Welcome, ${name}`;
 
