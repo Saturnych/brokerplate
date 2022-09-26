@@ -7,6 +7,7 @@
  *
  */
 
+import jwt from 'jsonwebtoken';
 import { Errors, Context } from 'moleculer';
 import { User } from '../../types';
 import { checkService, validateEmail } from '../../utils';
@@ -36,6 +37,60 @@ export default {
 	},
 
 	/**
+	 * Token action.
+	 *
+	 */
+	token: {
+		version: VERSION,
+		params: {
+			user: 'object|optional',
+	    token: 'string|optional',
+	    action: 'string|optional',
+	    type: 'string|optional',
+	    setToken: 'boolean|optional',
+		},
+		handler: async (ctx: Context<{ token: string; path: string }>): Promise<any> => {
+			if (ctx.service.debug())
+				ctx.service.logger.info(
+					'auth.token() ctx.params:',
+					JSON.stringify(ctx.params)
+				);
+
+
+		},
+	},
+
+
+	/**
+	 * Access action.
+	 *
+	 */
+	access: {
+		version: VERSION,
+		params: {
+			token: 'string',
+			path: 'string',
+		},
+		handler: async (ctx: Context<{ token: string; path: string }>): Promise<any> => {
+			if (ctx.service.debug())
+				ctx.service.logger.info(
+					'auth.access() ctx.params:',
+					JSON.stringify(ctx.params)
+				);
+
+			//const user = await ctx.call(`${ctx.service.version}.auth.token`, { token: ctx.params.token, action: 'verify', type: 'Access' });
+		  //if (!user) throw new Errors.MoleculerError('Invalid token!', 401, 'ERR_INVALIDTOKEN');
+
+			//const targets = await ctx.call(`${ctx.service.version}.user.targets`, { user, path: ctx.params.path });
+		  //if (ctx.service.debug()) ctx.service.logger.info('auth.access() targets.length:', targets?.length);
+			//if (!targets || targets.length<1) throw new Errors.MoleculerError('Access denied!', 403, 'ERR_NOACCESS');
+
+			//await ctx.service.redis.set(`${user._id}:${user.refreshToken}`, true);
+			//ctx.meta.user = user;
+		},
+	},
+
+	/**
 	 * Login a username
 	 */
 	login: {
@@ -53,8 +108,8 @@ export default {
 		): Promise<User> => {
 			if (ctx.service.debug())
 				ctx.service.logger.info(
-					'auth.login() ctx.params:',
-					JSON.stringify(ctx.params)
+					'auth.login() email:',
+					JSON.stringify(ctx.params.email)
 				);
 
 			if (!validateEmail(ctx.params.email))

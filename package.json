@@ -61,6 +61,7 @@
     "dotenv": "^16.0.2",
     "helmet": "^6.0.0",
     "ioredis": "^5.2.3",
+    "jsonwebtoken": "^8.5.1",
     "mkdirp": "^1.0.4",
     "moleculer": "^0.14.23",
     "moleculer-db": "^0.8.19",

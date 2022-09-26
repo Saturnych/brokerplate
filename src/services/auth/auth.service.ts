@@ -19,6 +19,10 @@ import {
 	REDIS_USER,
 	REDIS_PASSWORD,
 	REDIS_DB_INDEX,
+	REFRESH_TOKEN_SECRET,
+	ACCESS_TOKEN_SECRET,
+	ACCESS_TOKEN_EXPIRES,
+	ACCESS_TOKEN_EXPIRES_SEC,
 } from '../../config/vars';
 
 const options = {
@@ -42,5 +46,12 @@ export default class AuthService extends BasicService {
 			mixins,
 			actions,
 		});
+
+		this._initial = {
+			rts: REFRESH_TOKEN_SECRET,
+			ats: ACCESS_TOKEN_SECRET,
+			expires: ACCESS_TOKEN_EXPIRES,
+			expiresSec: ACCESS_TOKEN_EXPIRES_SEC,
+		};
 	}
 }

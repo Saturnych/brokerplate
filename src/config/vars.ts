@@ -25,22 +25,31 @@ export const LAB_TOKEN: string = process.env.LAB_TOKEN || '';
 export const LAB_APIKEY: string = process.env.LAB_APIKEY || '';
 
 // // Redis
-export const REDIS_HOST = process.env.REDIS_HOST || '';
-export const REDIS_PORT = isNumeric(process.env.REDIS_PORT)
+export const REDIS_HOST: string = process.env.REDIS_HOST || '';
+export const REDIS_PORT: number = isNumeric(process.env.REDIS_PORT)
 	? Number(process.env.REDIS_PORT)
 	: 6379; // 11888
-export const REDIS_USER = process.env.REDIS_USER || '';
-export const REDIS_PASSWORD = process.env.REDIS_PASSWORD || '';
-export const REDIS_DB_INDEX = isNumeric(process.env.REDIS_DB_INDEX)
+export const REDIS_USER: string = process.env.REDIS_USER || '';
+export const REDIS_PASSWORD: string = process.env.REDIS_PASSWORD || '';
+export const REDIS_DB_INDEX: number = isNumeric(process.env.REDIS_DB_INDEX)
 	? Number(process.env.REDIS_DB_INDEX)
 	: 0;
 
 // // PG
-export const POSTGRES_HOST = process.env.POSTGRES_HOST || 'pg';
-export const POSTGRES_PORT = isNumeric(process.env.POSTGRES_PORT)
+export const POSTGRES_HOST: string = process.env.POSTGRES_HOST || 'pg';
+export const POSTGRES_PORT: number = isNumeric(process.env.POSTGRES_PORT)
 	? Number(process.env.POSTGRES_PORT)
 	: 5432;
-export const POSTGRES_USER = process.env.POSTGRES_USER || 'postgres';
-export const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD || 'test';
-export const POSTGRES_DB = process.env.POSTGRES_DB || 'test';
-export const POSTGRES_URI = process.env.POSTGRES_URI || '';
+export const POSTGRES_USER: string = process.env.POSTGRES_USER || 'postgres';
+export const POSTGRES_PASSWORD: string = process.env.POSTGRES_PASSWORD || 'test';
+export const POSTGRES_DB: string = process.env.POSTGRES_DB || 'test';
+export const POSTGRES_URI: string = process.env.POSTGRES_URI || '';
+
+// // Passwords
+export const SALT_WORK_FACTOR: number = Number(process.env.SALT_WORK_FACTOR || 10);
+
+// // Authentication/Authorization
+export const REFRESH_TOKEN_SECRET: string = process.env.REFRESH_TOKEN_SECRET || 'REFRESH-TOKEN-SECRET';
+export const ACCESS_TOKEN_SECRET: string = process.env.ACCESS_TOKEN_SECRET || 'ACCESS-TOKEN-SECRET';
+export const ACCESS_TOKEN_EXPIRES: string = process.env.ACCESS_TOKEN_EXPIRES || '180m';
+export const ACCESS_TOKEN_EXPIRES_SEC: number = Number(process.env.ACCESS_TOKEN_EXPIRES_SEC || 180*60);
