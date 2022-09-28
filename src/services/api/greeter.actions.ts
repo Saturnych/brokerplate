@@ -10,7 +10,7 @@
 import { Context } from 'moleculer';
 import { VERSION } from '../../config/vars';
 
-const ActionHello = (ctx: Context): string =>	'Hello, Moleculer!';
+const ActionHello = (ctx: Context): string => 'Hello, Moleculer!';
 
 const ActionWelcome = (name: string): string => `Welcome, ${name}`;
 

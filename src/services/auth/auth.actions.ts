@@ -44,22 +44,21 @@ export default {
 		version: VERSION,
 		params: {
 			user: 'object|optional',
-	    token: 'string|optional',
-	    action: 'string|optional',
-	    type: 'string|optional',
-	    setToken: 'boolean|optional',
+			token: 'string|optional',
+			action: 'string|optional',
+			type: 'string|optional',
+			setToken: 'boolean|optional',
 		},
-		handler: async (ctx: Context<{ token: string; path: string }>): Promise<any> => {
+		handler: async (
+			ctx: Context<{ token: string; path: string }>
+		): Promise<any> => {
 			if (ctx.service.debug())
 				ctx.service.logger.info(
 					'auth.token() ctx.params:',
 					JSON.stringify(ctx.params)
 				);
-
-
 		},
 	},
-
 
 	/**
 	 * Access action.
@@ -71,7 +70,9 @@ export default {
 			token: 'string',
 			path: 'string',
 		},
-		handler: async (ctx: Context<{ token: string; path: string }>): Promise<any> => {
+		handler: async (
+			ctx: Context<{ token: string; path: string }>
+		): Promise<any> => {
 			if (ctx.service.debug())
 				ctx.service.logger.info(
 					'auth.access() ctx.params:',
@@ -79,10 +80,10 @@ export default {
 				);
 
 			//const user = await ctx.call(`${ctx.service.version}.auth.token`, { token: ctx.params.token, action: 'verify', type: 'Access' });
-		  //if (!user) throw new Errors.MoleculerError('Invalid token!', 401, 'ERR_INVALIDTOKEN');
+			//if (!user) throw new Errors.MoleculerError('Invalid token!', 401, 'ERR_INVALIDTOKEN');
 
 			//const targets = await ctx.call(`${ctx.service.version}.user.targets`, { user, path: ctx.params.path });
-		  //if (ctx.service.debug()) ctx.service.logger.info('auth.access() targets.length:', targets?.length);
+			//if (ctx.service.debug()) ctx.service.logger.info('auth.access() targets.length:', targets?.length);
 			//if (!targets || targets.length<1) throw new Errors.MoleculerError('Access denied!', 403, 'ERR_NOACCESS');
 
 			//await ctx.service.redis.set(`${user._id}:${user.refreshToken}`, true);

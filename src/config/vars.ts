@@ -41,15 +41,21 @@ export const POSTGRES_PORT: number = isNumeric(process.env.POSTGRES_PORT)
 	? Number(process.env.POSTGRES_PORT)
 	: 5432;
 export const POSTGRES_USER: string = process.env.POSTGRES_USER || 'postgres';
-export const POSTGRES_PASSWORD: string = process.env.POSTGRES_PASSWORD || 'test';
+export const POSTGRES_PASSWORD: string =
+	process.env.POSTGRES_PASSWORD || 'test';
 export const POSTGRES_DB: string = process.env.POSTGRES_DB || 'test';
 export const POSTGRES_URI: string = process.env.POSTGRES_URI || '';
 
 // // Passwords
-export const SALT_WORK_FACTOR: number = Number(process.env.SALT_WORK_FACTOR || 10);
+export const SALT_WORK_FACTOR = Number(process.env.SALT_WORK_FACTOR || 10);
 
 // // Authentication/Authorization
-export const REFRESH_TOKEN_SECRET: string = process.env.REFRESH_TOKEN_SECRET || 'REFRESH-TOKEN-SECRET';
-export const ACCESS_TOKEN_SECRET: string = process.env.ACCESS_TOKEN_SECRET || 'ACCESS-TOKEN-SECRET';
-export const ACCESS_TOKEN_EXPIRES: string = process.env.ACCESS_TOKEN_EXPIRES || '180m';
-export const ACCESS_TOKEN_EXPIRES_SEC: number = Number(process.env.ACCESS_TOKEN_EXPIRES_SEC || 180*60);
+export const REFRESH_TOKEN_SECRET: string =
+	process.env.REFRESH_TOKEN_SECRET || 'REFRESH-TOKEN-SECRET';
+export const ACCESS_TOKEN_SECRET: string =
+	process.env.ACCESS_TOKEN_SECRET || 'ACCESS-TOKEN-SECRET';
+export const ACCESS_TOKEN_EXPIRES: string =
+	process.env.ACCESS_TOKEN_EXPIRES || '180m';
+export const ACCESS_TOKEN_EXPIRES_SEC = Number(
+	process.env.ACCESS_TOKEN_EXPIRES_SEC || 180 * 60
+);

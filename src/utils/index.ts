@@ -10,6 +10,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { Service, ServiceBroker, LoggerInstance } from 'moleculer';
 import { validate as uuidValidate } from 'uuid';
+import { onBeforeCall, onAfterCall } from '../hooks';
 import { ActionReturnData, returnData } from '../types';
 
 const units = ['h', 'm', 's', 'ms', 'μs', 'ns'];
@@ -173,4 +174,51 @@ export const resError = (
 	res.statusCode = statusCode;
 	res.setHeader('Content-Type', contentType);
 	res.end(result);
+};
+
+export const configRoute = (route) => {
+	const def = {
+		path: '',
+		whitelist: [
+			// Access to any actions in all services under '/api' URL
+			'**',
+		],
+		// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
+		use: [],
+		// Enable/disable parameter merging method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Disable-merging
+		mergeParams: true,
+		// Enable authentication. Implement the logic into `authenticate` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authentication
+		authentication: false,
+		// Enable authorization. Implement the logic into `authorize` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authorization
+		authorization: false,
+		// The auto-alias feature allows you to declare your route alias directly in your services.
+		// The gateway will dynamically build the full routes from service schema.
+		autoAliases: true,
+		aliases: {},
+		// Calling options. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Calling-options
+		callingOptions: {},
+		bodyParsers: {
+			json: {
+				strict: false,
+				limit: '3MB',
+			},
+			urlencoded: {
+				extended: true,
+				limit: '3MB',
+			},
+		},
+		// Mapping policy setting. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Mapping-policy
+		mappingPolicy: 'all', // Available values: 'all', 'restrict'
+		// Enable/disable logging
+		logging: true,
+		// hooks
+		onBeforeCall,
+		onAfterCall,
+	};
+
+	for (const key in def) {
+		route[key] = key in route ? route[key] : def[key];
+	}
+
+	return route;
 };

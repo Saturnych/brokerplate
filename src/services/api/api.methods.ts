@@ -33,13 +33,15 @@ export default {
 
 		if (!!auth && auth.startsWith('Bearer')) {
 			const token: string = auth.slice(7).trim();
-			if (!!token) {
-		    return ctx.call(`${ctx.service.version}.auth.access`, {
-		      token,
-		      path: route.opts.path,
-		    });
-		  } else
-		    throw new Errors.UnAuthorizedError(Errors.ERR_INVALID_TOKEN, {	error: 'Invalid Token' });
+			if (token) {
+				return ctx.call(`${ctx.service.version}.auth.access`, {
+					token,
+					path: route.opts.path,
+				});
+			} else
+				throw new Errors.UnAuthorizedError(Errors.ERR_INVALID_TOKEN, {
+					error: 'Invalid Token',
+				});
 		} else {
 			// No token. Throw an error or do nothing if anonymous access is allowed.
 			// throw new Errors.UnAuthorizedError(Errors.ERR_NO_TOKEN);
@@ -72,7 +74,6 @@ export default {
 		}
 	},
 };
-
 
 /*
 InvalidRequestBodyError: typeof InvalidRequestBodyError;

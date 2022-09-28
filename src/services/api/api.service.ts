@@ -27,8 +27,11 @@ export default class ApiService extends WebService {
 			methods,
 			actions,
 			settings: {
-				onError: (req: IncomingMessage, res: ServerResponse, err) =>
-					resError(req, res, err, broker.logger, DEBUG),
+				onError: (
+					req: IncomingMessage,
+					res: ServerResponse,
+					err: Error | any
+				) => resError(req, res, err, broker.logger, DEBUG),
 				...settings,
 			},
 		});
