@@ -21,6 +21,7 @@ const route = {
 };
 
 // /v1/api/list-aliases => v1.api.listAliases
+route.aliases[`GET api/health`] = `${VERSION}.api.health`;
 route.aliases[`GET ${VERSION}/api/health`] = `${VERSION}.api.health`;
 route.aliases[`GET ${VERSION}/api/test`] = `${VERSION}.api.test`;
 route.aliases[`GET ${VERSION}/auth/login`] = `${VERSION}.auth.login`;
