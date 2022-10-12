@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2022
  *
- * @summary Moleculer API
+ * @summary Brokerplate Moleculer API
  * @author Denis Glebko <saturnych@gmail.com>
  * @copyright Denis Glebko 2022
  *
@@ -25,7 +25,7 @@ export const isObject = (o): boolean =>
 	o !== null && typeof o === 'object' && !(o instanceof String);
 
 export const isPlainObject = (o): boolean =>
-	o != null
+	o !== null
 		? Object.getPrototypeOf(o) === Object.prototype ||
 		  Object.getPrototypeOf(o) === null
 		: false;
@@ -42,7 +42,7 @@ export const removeFromArray = (arr: Array<any>, item): Array<any> => {
 };
 
 export const humanize = (milli): string => {
-	if (milli == null) return '?';
+	if (milli === null) return '?';
 	for (let i = 0; i < divisors.length; i++) {
 		const val = milli / divisors[i];
 		if (val >= 1.0) return String(Math.floor(val) + units[i]);
@@ -77,7 +77,7 @@ export const checkService = async (
 ): Promise<Service | Error> => {
 	try {
 		const services = (await getServices(broker)).filter(
-			(s) => s.name == serviceName && s.available
+			(s) => s.name === serviceName && s.available
 		);
 		if (services.length > 0) Promise.resolve(services[0]);
 		else throw new Error(`Service '${serviceName}' is not available!`);
@@ -162,7 +162,7 @@ export const resError = (
 	contentType = 'application/json; charset=utf-8', // text/plain
 	defaultErrorCode = 501
 ): void => {
-	if (debug) logger.error("service.onError():", error);
+	if (debug) logger.error('service.onError():', error);
 	const statusCode = Number(error.code || defaultErrorCode);
 	const ret: ActionReturnData<null> = resObj<null>({
 		statusCode,

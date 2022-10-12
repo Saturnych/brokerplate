@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2022
  *
- * @summary Moleculer API app
+ * @summary Brokerplate Moleculer API app
  * @author Denis Glebko <saturnych@gmail.com>
  * @copyright Denis Glebko 2022
  *

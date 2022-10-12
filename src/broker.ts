@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2022
  *
- * @summary Moleculer API ServiceBroker
+ * @summary Brokerplate Moleculer API ServiceBroker
  * @author Denis Glebko <saturnych@gmail.com>
  * @copyright Denis Glebko 2022
  *
@@ -13,7 +13,7 @@ import moleculerConfig from '../moleculer.config';
 
 import { DEV_MODE, SERVICEDIR, SERVICES } from './config/vars';
 
-const serviceList = SERVICES ? SERVICES.split(",") : [];
+const serviceList = SERVICES ? SERVICES.split(',') : [];
 const serviceDir =
 	!!SERVICEDIR && existsSync(SERVICEDIR) ? SERVICEDIR : './services';
 

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2022
  *
- * @summary Moleculer API
+ * @summary Brokerplate Moleculer API
  * @author Denis Glebko <saturnych@gmail.com>
  * @copyright Denis Glebko 2022
  *
@@ -129,9 +129,9 @@ export default {
 				!services.user.available
 			) {
 				throw new Errors.MoleculerError(
-					"Service 'user' is not available!",
+					'Service 'user' is not available!',
 					401,
-					"ERR_NOSERVICE"
+					'ERR_NOSERVICE'
 				);
 			}
 
@@ -149,9 +149,9 @@ export default {
 			if (user) {
 			} else {
 				throw new Errors.MoleculerError(
-					"User not found!",
+					'User not found!',
 					403,
-					"ERR_NOUSER"
+					'ERR_NOUSER'
 				);
 			}
 

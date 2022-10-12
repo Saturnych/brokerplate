@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2022
  *
- * @summary Moleculer API
+ * @summary Brokerplate Moleculer API
  * @author Denis Glebko <saturnych@gmail.com>
  * @copyright Denis Glebko 2022
  *
@@ -66,7 +66,7 @@ export default {
 		// Function used to generate keys. Defaults to:
 		key: (req) => {
 			return (
-				req.headers["x-forwarded-for"] ||
+				req.headers['x-forwarded-for'] ||
 				req.connection.remoteAddress ||
 				req.socket.remoteAddress ||
 				req.connection.socket.remoteAddress

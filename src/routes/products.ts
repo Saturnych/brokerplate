@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2022
  *
- * @summary ApiService authorized /auth routes
+ * @summary Brokerplate Moleculer API authorized /auth routes
  * @author Denis Glebko <saturnych@gmail.com>
  * @copyright Denis Glebko 2022
  *
