@@ -24,6 +24,6 @@ const route = {
 route.aliases[`GET api/health`] = `${VERSION}.api.health`;
 route.aliases[`GET ${VERSION}/api/health`] = `${VERSION}.api.health`;
 route.aliases[`GET ${VERSION}/api/test`] = `${VERSION}.api.test`;
-route.aliases[`GET ${VERSION}/auth/login`] = `${VERSION}.auth.login`;
+route.aliases[`POST ${VERSION}/auth/login`] = `${VERSION}.auth.login`;
 
 export default route;

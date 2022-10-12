@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2022
  *
- * @summary ApiService unauthorized /auth routes
+ * @summary ApiService authorized /auth routes
  * @author Denis Glebko <saturnych@gmail.com>
  * @copyright Denis Glebko 2022
  *
@@ -20,6 +20,7 @@ const route = {
 		'POST recover': `${VERSION}.auth.recover`,
 		'POST token': `${VERSION}.auth.token`,
 		'POST updatePassword': `${VERSION}.auth.updatePassword`,
+		'POST logout': `${VERSION}.auth.logout`,
 	},
 };
 
