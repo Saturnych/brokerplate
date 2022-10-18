@@ -129,7 +129,7 @@ export default {
 				!services.user.available
 			) {
 				throw new Errors.MoleculerError(
-					'Service 'user' is not available!',
+					"Service 'user' is not available!",
 					401,
 					'ERR_NOSERVICE'
 				);
