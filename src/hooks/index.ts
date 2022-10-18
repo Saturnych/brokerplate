@@ -30,8 +30,8 @@ export const onBeforeCall = async (
 ): Promise<void> => {
 	if (ctx.service.debug())
 		ctx.service.logger.info('api.onBeforeCall() meta:', ctx.meta);
+
 	if (
-		route.checkHeaders &&
 		Array.isArray(route.checkHeaders) &&
 		route.checkHeaders
 			.map((x) => x.toLowerCase())
@@ -80,6 +80,7 @@ export const onAfterCall = async (
 			'data.length:',
 			Object.keys(data).length
 		);
+
 	// redirects
 	if (data.redirect) {
 		ctx.meta.$statusCode = res.statusCode = 302;
@@ -88,6 +89,7 @@ export const onAfterCall = async (
 		return data;
 	}
 	ctx.meta.$statusCode = res.statusCode = 200;
+
 	// file download
 	const contentType = (data.contentType || '').trim();
 	if (!!contentType && data.filename && data.GetFile) {
@@ -107,6 +109,7 @@ export const onAfterCall = async (
 			ctx.service.logger.info('onAfterCall.GetFile() file');
 		if (file) return file;
 	}
+	// user meta exists - setting headers
 	if (ctx.meta.user)
 		res.setHeader('X-Plate-User', ctx.meta.user.id as string);
 	const ret: ActionReturnData<any> = resObj<any>({ data });

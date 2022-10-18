@@ -12,7 +12,7 @@ config();
 
 import { isNumeric } from '../utils';
 
-export const NODE_ENV: string = process.env.NODE_ENV || '';
+export const NODE_ENV: string = process.env.NODE_ENV || ''; // 'test' - for NeDB MemoryAdapter usage
 export const DEV_MODE: boolean = !!NODE_ENV && NODE_ENV.indexOf('dev') > -1;
 export const DEBUG = !!DEV_MODE;
 
@@ -46,8 +46,13 @@ export const POSTGRES_PASSWORD: string =
 export const POSTGRES_DB: string = process.env.POSTGRES_DB || 'test';
 export const POSTGRES_URI: string = process.env.POSTGRES_URI || '';
 
+// // MongoDB
+export const MONGO_URI: string = process.env.MONGO_URI || '';
+
 // // Passwords
-export const SALT_WORK_FACTOR = Number(process.env.SALT_WORK_FACTOR || 10);
+export const SALT_WORK_FACTOR: number = isNumeric(process.env.SALT_WORK_FACTOR)
+	? Number(process.env.SALT_WORK_FACTOR)
+	: 10;
 
 // // Authentication/Authorization
 export const REFRESH_TOKEN_SECRET: string =
@@ -56,6 +61,8 @@ export const ACCESS_TOKEN_SECRET: string =
 	process.env.ACCESS_TOKEN_SECRET || 'ACCESS-TOKEN-SECRET';
 export const ACCESS_TOKEN_EXPIRES: string =
 	process.env.ACCESS_TOKEN_EXPIRES || '180m';
-export const ACCESS_TOKEN_EXPIRES_SEC = Number(
-	process.env.ACCESS_TOKEN_EXPIRES_SEC || 180 * 60
-);
+export const ACCESS_TOKEN_EXPIRES_SEC: number = isNumeric(
+	process.env.ACCESS_TOKEN_EXPIRES_SEC
+)
+	? Number(process.env.ACCESS_TOKEN_EXPIRES_SEC)
+	: 180 * 60;
