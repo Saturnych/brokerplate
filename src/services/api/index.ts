@@ -8,9 +8,11 @@
  */
 
 import api from './api.service';
+import file from './file.service';
 import greeter from './greeter.service';
 
 export default {
 	api,
+	file,
 	greeter,
 };
