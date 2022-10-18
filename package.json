@@ -13,7 +13,7 @@
     "start": "node ./dist/src/app.js",
     "cli": "moleculer connect NATS",
     "ci": "jest --watch",
-    "test": "jest --coverage",
+    "test": "jest --coverage --detectOpenHandles",
     "clean": "gts clean",
     "fix": "gts fix ./src/**/*.ts",
     "lint": "gts lint ./src/**/*.ts",
@@ -48,6 +48,7 @@
     "jest-cli": "^29.0.3",
     "moleculer-repl": "^0.7.2",
     "nodemon": "^2.0.20",
+    "socket.io-client": "^4.5.3",
     "ts-jest": "^29.0.1",
     "ts-node": "^8.8.1"
   },
@@ -67,6 +68,7 @@
     "moleculer-db": "^0.8.19",
     "moleculer-db-adapter-mongo": "^0.4.15",
     "moleculer-db-adapter-sequelize": "^0.2.15",
+    "moleculer-io": "^2.1.0",
     "moleculer-web": "^0.10.4",
     "nats": "^2.8.0",
     "pg": "^8.8.0",
@@ -74,6 +76,7 @@
     "protobufjs": "^7.1.2",
     "redlock": "^4.0.0",
     "sequelize": "^6.25.0",
+    "socket.io-nats": "^0.1.1",
     "typescript": "^4.8.3",
     "uuid": "^9.0.0"
   },

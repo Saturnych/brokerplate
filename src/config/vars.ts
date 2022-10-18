@@ -23,6 +23,12 @@ export const APP_NAME: string = process.env.APP_NAME || 'app';
 export const VERSION: string = process.env.VERSION || 'v0';
 export const LAB_TOKEN: string = process.env.LAB_TOKEN || '';
 export const LAB_APIKEY: string = process.env.LAB_APIKEY || '';
+export const TRANSPORTER: string = process.env.TRANSPORTER || '';
+
+// // Socket.io
+export const SOCKET_IO_PORT: number = isNumeric(process.env.SOCKET_IO_PORT)
+	? Number(process.env.SOCKET_IO_PORT)
+	: 3000;
 
 // // Redis
 export const REDIS_HOST: string = process.env.REDIS_HOST || '';
