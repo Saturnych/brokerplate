@@ -10,9 +10,9 @@ describe('Test greeter service', () => {
 	afterAll(() => broker.stop());
 
 	describe('Test greeter.hello action', () => {
-		it('should return with Hello Moleculer', async () => {
+		it('should return with Hello, Moleculer!', async () => {
 			const res = await broker.call('v1.greeter.hello');
-			expect(res).toBe('Hello Moleculer');
+			expect(res).toBe('Hello, Moleculer!');
 		});
 	});
 
