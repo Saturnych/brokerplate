@@ -14,7 +14,7 @@ import { isNumeric } from '../utils';
 
 export const NODE_ENV: string = process.env.NODE_ENV || ''; // 'test' - for NeDB MemoryAdapter usage
 export const DEV_MODE: boolean = !!NODE_ENV && NODE_ENV.indexOf('dev') > -1;
-export const DEBUG = !!DEV_MODE;
+export const DEBUG: boolean = !!DEV_MODE;
 
 // // Moleculer
 export const SERVICEDIR: string = process.env.SERVICEDIR || '';
@@ -24,11 +24,7 @@ export const VERSION: string = process.env.VERSION || 'v0';
 export const LAB_TOKEN: string = process.env.LAB_TOKEN || '';
 export const LAB_APIKEY: string = process.env.LAB_APIKEY || '';
 export const TRANSPORTER: string = process.env.TRANSPORTER || '';
-
-// // Socket.io
-export const SOCKET_IO_PORT: number = isNumeric(process.env.SOCKET_IO_PORT)
-	? Number(process.env.SOCKET_IO_PORT)
-	: 3000;
+export const CACHER_REDIS: string = process.env.CACHER_REDIS || '';
 
 // // Redis
 export const REDIS_HOST: string = process.env.REDIS_HOST || '';
@@ -40,6 +36,11 @@ export const REDIS_PASSWORD: string = process.env.REDIS_PASSWORD || '';
 export const REDIS_DB_INDEX: number = isNumeric(process.env.REDIS_DB_INDEX)
 	? Number(process.env.REDIS_DB_INDEX)
 	: 0;
+
+// // Socket.io
+export const SOCKET_IO_PORT: number = isNumeric(process.env.SOCKET_IO_PORT)
+	? Number(process.env.SOCKET_IO_PORT)
+	: 3000;
 
 // // PG
 export const POSTGRES_HOST: string = process.env.POSTGRES_HOST || 'pg';

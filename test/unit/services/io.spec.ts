@@ -1,8 +1,10 @@
+import io from 'socket.io-client';
 import {Errors, ServiceBroker} from 'moleculer';
 import GreeterService from '../../../src/services/api/greeter.service';
 import IoService from '../../../src/services/io.service';
 import moleculerConfig from '../../../moleculer.config';
-import io from 'socket.io-client';
+
+import { DEBUG, VERSION, SOCKET_IO_PORT } from '../../../src/config/vars';
 
 describe('Test io service', () => {
 	const broker = new ServiceBroker(moleculerConfig); // { logger: false, ...moleculerConfig }
@@ -13,7 +15,7 @@ describe('Test io service', () => {
 
 	beforeAll(() => {
 		broker.start();
-		socket = io('http://localhost:3000');
+		socket = io(`http://localhost:${SOCKET_IO_PORT}`);
 	});
 
 	afterAll(() => {
@@ -23,7 +25,7 @@ describe('Test io service', () => {
 
 	describe('Test io.call.welcome action', () => {
 		it('should return with Welcome, Test', async () => {
-			socket.emit('call', 'v1.greeter.welcome', { name: 'Test' }, (err, res) => {
+			socket.emit('call', `${VERSION}.greeter.welcome`, { name: 'Test' }, (err, res) => {
 			  if (err) {
 			    console.error(err);
 			  } else {
@@ -34,7 +36,7 @@ describe('Test io service', () => {
 		});
 
 		it('should reject an ValidationError', async () => {
-			socket.emit('call', 'v1.greeter.welcome', {}, (err, res) => {
+			socket.emit('call', `${VERSION}.greeter.welcome`, {}, (err, res) => {
 				expect.assertions(1);
 				if (err) {
 			    console.error(err);

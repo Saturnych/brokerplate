@@ -10,11 +10,11 @@
 import { Duplex } from 'stream';
 import { Context, Service, ServiceBroker, ServiceSchema } from 'moleculer';
 import SocketIOService from 'moleculer-io';
-import SocketIOAdapter from 'socket.io-nats';
+import SocketIOAdapter from 'socket.io-nats'; // socket.io-redis
 import ApiGateway from 'moleculer-web';
 const { Errors } = ApiGateway;
 
-import { DEBUG, VERSION, SOCKET_IO_PORT, TRANSPORTER } from '../config/vars';
+import { DEBUG, VERSION, SOCKET_IO_PORT, TRANSPORTER, CACHER_REDIS } from '../config/vars';
 
 export default class IoService extends Service {
 	public constructor(
@@ -23,10 +23,12 @@ export default class IoService extends Service {
 	) {
 		super(broker);
 		const options = { adapter: null };
+		//if (!!CACHER_REDIS) options.adapter = SocketIOAdapter(CACHER_REDIS);
 		if (!!TRANSPORTER) options.adapter = SocketIOAdapter(TRANSPORTER);
 		const schema: ServiceSchema = {
 			name,
 			version: VERSION,
+			meta: { scalable: true },
 			mixins: [SocketIOService],
 			settings: {
 				port: SOCKET_IO_PORT,
