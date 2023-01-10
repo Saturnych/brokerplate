@@ -19,6 +19,7 @@
     "lint": "gts lint ./src/**/*.ts",
     "dc:up": "docker-compose up --build -d",
     "dc:logs": "docker-compose logs -f",
+    "dc:del": "docker-compose down -v",
     "dc:down": "docker-compose down"
   },
   "keywords": [

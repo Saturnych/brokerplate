@@ -132,6 +132,13 @@ services:
     networks:
       - internal
 
+  hoppscotch:
+    image: hoppscotch/hoppscotch:latest
+    ports:
+      - 3030:3000
+    networks:
+      - internal 
+
   traefik:
     image: traefik:v2.1
     command:
