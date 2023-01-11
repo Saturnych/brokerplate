@@ -19,16 +19,26 @@ export default {
 	 */
 	save: {
 		version: VERSION,
-		handler: async (ctx: Context<any, { filename: string }>): Promise<string> => new Promise((resolve, reject) => {
-			if (!!ctx.meta.filename) reject(new Error('Wrong filename!'));
-			const filePath = join(__dirname, 'public/upload', ctx.meta.filename);
-			const f = createWriteStream(filePath);
-			f.on('close', () => {
-				if (ctx.service.debug()) ctx.service.logger.info(`Uploaded file stored in '${filePath}'`);
-				resolve(filePath);
-			});
-			f.on('error', err => reject(err));
-			ctx.params.pipe(f);
-		}),
+		handler: async (
+			ctx: Context<any, { filename: string }>
+		): Promise<string> =>
+			new Promise((resolve, reject) => {
+				if (ctx.meta.filename) reject(new Error('Wrong filename!'));
+				const filePath = join(
+					__dirname,
+					'public/upload',
+					ctx.meta.filename
+				);
+				const f = createWriteStream(filePath);
+				f.on('close', () => {
+					if (ctx.service.debug())
+						ctx.service.logger.info(
+							`Uploaded file stored in '${filePath}'`
+						);
+					resolve(filePath);
+				});
+				f.on('error', (err) => reject(err));
+				ctx.params.pipe(f);
+			}),
 	},
 };
