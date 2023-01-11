@@ -31,9 +31,9 @@ services:
     environment:
       NODEID: apiNode
       SERVICEDIR: app/dist/src/services/api
-      PORT: 2000
+      PORT: 3000
     healthcheck:
-      test: ['CMD-SHELL', 'curl --fail http://localhost:2000/health || exit 1']
+      test: ['CMD-SHELL', 'curl --fail http://localhost:3000/health || exit 1']
       interval: 30s
       timeout: 5s
       retries: 10
