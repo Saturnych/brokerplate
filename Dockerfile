@@ -1,23 +1,28 @@
 FROM node:lts-alpine
 
+# curl for Healthcheck
+RUN apk --no-cache add curl
+#HEALTHCHECK --timeout=5s --interval=30s CMD curl --fail http://localhost:3000/health || exit 1
+
+# Install npm
+RUN npm install -g npm
+
 # Working directory
 WORKDIR /app
 
-# Install dependencies
-COPY package.json package-lock.json ./
-RUN npm ci --silent
-
 # Copy source
 COPY . .
+
+# npm config
+RUN npm config set registry "https://registry.npmjs.org/"
+
+# Install dependencies
+RUN npm install .
 
 # Build and cleanup
 ENV NODE_ENV=production
 RUN npm run build \
  && npm prune
-
-# curl for Healthcheck
-RUN apk --no-cache add curl
-#HEALTHCHECK --timeout=5s --interval=30s CMD curl --fail http://localhost:3000/api/v1/greeter/health || exit 1
 
 # Start server
 CMD ["npm", "start"]
