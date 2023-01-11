@@ -60,6 +60,9 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+# npm registry config file
+.npmrc
+
 # dotenv environment variables file
 .env
 
