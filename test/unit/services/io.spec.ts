@@ -27,9 +27,9 @@ describe('Test io service', () => {
 		it('should return with Welcome, Test', async () => {
 			socket.emit('call', `${VERSION}.greeter.welcome`, { name: 'Test' }, (err, res) => {
 			  if (err) {
-			    console.error(err);
+			    broker.logger.error(err);
 			  } else {
-			    console.log('call success:', res);
+			    broker.logger.info('call success:', res);
 					expect(res).toBe('Welcome, Test');
 			  }
 			});
@@ -39,10 +39,10 @@ describe('Test io service', () => {
 			socket.emit('call', `${VERSION}.greeter.welcome`, {}, (err, res) => {
 				expect.assertions(1);
 				if (err) {
-			    console.error(err);
+			    broker.logger.error(err);
 					expect(err).toBeInstanceOf(Errors.ValidationError);
 			  } else {
-			    console.log('call success:', res);
+			    broker.logger.info('call success:', res);
 			  }
 			});
 		});
@@ -52,9 +52,9 @@ describe('Test io service', () => {
 		it('should return with Welcome, Test', async () => {
 			socket.emit('welcome', 'test', {}, (err, res) => {
 			  if (err) {
-			    console.error(err);
+			    broker.logger.error(err);
 			  } else {
-			    console.log('call success:', res);
+			    broker.logger.info('call success:', res);
 					expect(res).toBe('Welcome, Io');
 			  }
 			});
