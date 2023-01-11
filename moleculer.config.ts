@@ -44,7 +44,7 @@ const brokerConfig: BrokerOptions = {
 	// Namespace of nodes to segment your nodes on the same network.
 	namespace: process.env.NAMESPACE || 'broker',
 	// Unique node identifier. Must be unique in a namespace.
-	nodeID: !!process.env.NODEID ? `${process.env.NODEID}.${v4()}` : '', 
+	nodeID: !!process.env.NODEID ? `${process.env.NODEID}.${v4()}` : '',
 	// Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
 	metadata: {
 		region: 'eu-west1',
@@ -55,7 +55,7 @@ const brokerConfig: BrokerOptions = {
 	// Enable/disable logging or use custom logger. More info: https://moleculer.services/docs/0.14/logging.html
 	// Available logger types: 'Console', 'File', 'Pino', 'Winston', 'Bunyan', 'debug', 'Log4js', 'Datadog', 'Laboratory'
 	logger:
-		String(process.env.LOGGER) === 'true'
+		!!process.env.LOGGER
 			? ([
 					{
 						type: 'Console',
@@ -72,7 +72,7 @@ const brokerConfig: BrokerOptions = {
 							autoPadding: false,
 						},
 					},
-					'Laboratory',
+					process.env.LOGGER,
 			  ] as LoggerConfig[])
 			: ({} as LoggerConfig),
 	// Default log level for built-in console logger. It can be overwritten in logger options above.

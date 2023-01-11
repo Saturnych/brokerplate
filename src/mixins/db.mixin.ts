@@ -85,9 +85,7 @@ export default class Connection
 			this.schema.collection = this.collection;
 		} else if (MONGO_URI) {
 			// Mongo adapter
-			this.schema.adapter = new MongoAdapter(MONGO_URI, {
-				useUnifiedTopology: true,
-			});
+			this.schema.adapter = new MongoAdapter(MONGO_URI); // , { useUnifiedTopology: true }
 			this.schema.collection = this.collection;
 		} else if (!!NODE_ENV && NODE_ENV.indexOf('test') > -1) {
 			// NeDB memory adapter for testing
