@@ -17,7 +17,7 @@ const route = {
 	authorization: true,
 	autoAliases: false,
 	aliases: {
-		'REST products': `${VERSION}.products`,
+		'REST /': `${VERSION}.products`,
 	},
 };
 

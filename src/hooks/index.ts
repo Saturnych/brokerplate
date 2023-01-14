@@ -93,11 +93,8 @@ export const onAfterCall = async (
 	// file download
 	const contentType = (data.contentType || '').trim();
 	if (!!contentType && data.filename && data.GetFile) {
-		let contentDisposition =
-			String(data.download || 0) === '1' ? 'attachment' : 'inline';
-		if (data.originalname && String(data.originalname).length > 0) {
-			contentDisposition = `${contentDisposition}; filename=${data.originalname}`;
-		}
+		let contentDisposition = data.download ? 'attachment' : 'inline';
+		if (!!data.originalname) contentDisposition = `${contentDisposition}; filename=${data.originalname}`;
 		ctx.meta.$responseHeaders = {
 			'Content-Disposition': contentDisposition,
 		};
@@ -109,6 +106,7 @@ export const onAfterCall = async (
 			ctx.service.logger.info('onAfterCall.GetFile() file');
 		if (file) return file;
 	}
+
 	// user meta exists - setting headers
 	if (ctx.meta.user)
 		res.setHeader('X-Plate-User', ctx.meta.user.id as string);

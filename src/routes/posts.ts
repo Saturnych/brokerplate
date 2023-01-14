@@ -17,7 +17,12 @@ const route = {
 	authorization: true,
 	autoAliases: false,
 	aliases: {
-		'REST posts': `${VERSION}.posts`,
+		//'REST /': `${VERSION}.posts`,
+		'GET /': `stream:${VERSION}.posts.list`,
+		'GET /:id': `stream:${VERSION}.posts.find`,
+		'POST /': `${VERSION}.posts.create`,
+		'PUT /:id': `stream:${VERSION}.posts.update`,
+		'DELETE /:id': `stream:${VERSION}.posts.remove`,
 	},
 };
 
