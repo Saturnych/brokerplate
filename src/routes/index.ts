@@ -10,10 +10,11 @@
 import { configRoute } from '../utils';
 
 import auth from './auth';
+import file from './file';
 import posts from './posts';
 import products from './products';
 import root from './root';
 
-const routes = [auth, posts, products, root];
+const routes = [auth, file, posts, products, root];
 
 export default routes.map((route) => configRoute(route));

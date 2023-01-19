@@ -14,7 +14,7 @@ import { isNumeric } from '../utils';
 
 export const NODE_ENV: string = process.env.NODE_ENV || ''; // 'test' - for NeDB MemoryAdapter usage
 export const DEV_MODE: boolean = !!NODE_ENV && NODE_ENV.indexOf('dev') > -1;
-export const DEBUG: boolean = !!DEV_MODE;
+export const DEBUG = !!DEV_MODE;
 
 // // Moleculer
 export const SERVICEDIR: string = process.env.SERVICEDIR || '';
