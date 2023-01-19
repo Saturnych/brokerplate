@@ -64,10 +64,8 @@ typings/
 .npmrc
 
 # dotenv environment variables file
-docker-compose.env
-.env
+*.env
 .env.dev
-.env.local
 
 # next.js build output
 .next
