@@ -23,9 +23,9 @@ const route = {
 	// Route level busboy config.
 	// More info: https://github.com/mscdex/busboy#busboy-methods
 	busboyConfig: {
-			limits: { files: 1 }
-			// Can be defined limit event handlers
-			// `onPartsLimit`, `onFilesLimit` or `onFieldsLimit`
+		limits: { files: 1 },
+		// Can be defined limit event handlers
+		// `onPartsLimit`, `onFilesLimit` or `onFieldsLimit`
 	},
 };
 

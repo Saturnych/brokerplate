@@ -7,22 +7,22 @@
  *
  */
 
- import { Duplex } from 'stream';
- import { Context, Service, ServiceBroker, ServiceSchema } from 'moleculer';
- import SocketIOService from 'moleculer-io';
- import SocketIOAdapterNats from 'socket.io-nats';
- //import SocketIOAdapterRedis from '@socket.io/redis-adapter';
- import ApiGateway from 'moleculer-web';
- const { Errors } = ApiGateway;
+import { Duplex } from 'stream';
+import { Context, Service, ServiceBroker, ServiceSchema } from 'moleculer';
+import SocketIOService from 'moleculer-io';
+import SocketIOAdapterNats from 'socket.io-nats';
+//import SocketIOAdapterRedis from '@socket.io/redis-adapter';
+import ApiGateway from 'moleculer-web';
+const { Errors } = ApiGateway;
 
- import {
- 	DEBUG,
- 	VERSION,
- 	CACHER,
- 	TRANSPORTER,
- 	SOCKET_IO_PORT,
- 	SOCKET_IO_ADAPTER,
- } from '../config/vars';
+import {
+	DEBUG,
+	VERSION,
+	CACHER,
+	TRANSPORTER,
+	SOCKET_IO_PORT,
+	SOCKET_IO_ADAPTER,
+} from '../config/vars';
 
 export default class IoService extends Service {
 	public constructor(
@@ -31,8 +31,11 @@ export default class IoService extends Service {
 	) {
 		super(broker);
 		const options = { adapter: null };
-		const adapter = !!SOCKET_IO_ADAPTER ? SOCKET_IO_ADAPTER : (!!CACHER && CACHER) || TRANSPORTER;
-		if (SocketIOAdapterNats && String(adapter).indexOf('nats:') > -1) options.adapter = SocketIOAdapterNats(adapter);
+		const adapter = SOCKET_IO_ADAPTER
+			? SOCKET_IO_ADAPTER
+			: (!!CACHER && CACHER) || TRANSPORTER;
+		if (SocketIOAdapterNats && String(adapter).indexOf('nats:') > -1)
+			options.adapter = SocketIOAdapterNats(adapter);
 		//else if (adapter.indexOf('redis:') > -1) options.adapter = SocketIOAdapterRedis(adapter);
 		const schema: ServiceSchema = {
 			name,

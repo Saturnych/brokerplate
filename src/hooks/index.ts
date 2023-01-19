@@ -94,7 +94,8 @@ export const onAfterCall = async (
 	const contentType = (data.contentType || '').trim();
 	if (!!contentType && data.filename && data.GetFile) {
 		let contentDisposition = data.download ? 'attachment' : 'inline';
-		if (!!data.originalname) contentDisposition = `${contentDisposition}; filename=${data.originalname}`;
+		if (data.originalname)
+			contentDisposition = `${contentDisposition}; filename=${data.originalname}`;
 		ctx.meta.$responseHeaders = {
 			'Content-Disposition': contentDisposition,
 		};
