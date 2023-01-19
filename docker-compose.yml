@@ -55,6 +55,7 @@ services:
     environment:
       NODEID: authNode
       SERVICEDIR: app/dist/src/services/auth
+      PORT: 2001
     depends_on:
         api:
           condition: service_started
@@ -73,6 +74,7 @@ services:
     environment:
       NODEID: postsNode
       SERVICEDIR: app/dist/src/services/posts
+      PORT: 2002
     depends_on:
         postgres:
           condition: service_healthy
@@ -89,6 +91,7 @@ services:
     environment:
       NODEID: productsNode
       SERVICEDIR: app/dist/src/services/products
+      PORT: 2003
     depends_on:
         postgres:
           condition: service_healthy
