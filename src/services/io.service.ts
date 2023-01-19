@@ -10,11 +10,19 @@
 import { Duplex } from 'stream';
 import { Context, Service, ServiceBroker, ServiceSchema } from 'moleculer';
 import SocketIOService from 'moleculer-io';
-import SocketIOAdapter from 'socket.io-nats'; // socket.io-redis
+import SocketIOAdapterNats from 'socket.io-nats';
+//import SocketIOAdapterRedis from '@socket.io/redis-adapter';
 import ApiGateway from 'moleculer-web';
 const { Errors } = ApiGateway;
 
-import { DEBUG, VERSION, SOCKET_IO_PORT, TRANSPORTER, CACHER_REDIS } from '../config/vars';
+import {
+	DEBUG,
+	VERSION,
+	CACHER,
+	TRANSPORTER,
+	SOCKET_IO_PORT,
+	SOCKET_IO_ADAPTER,
+} from '../config/vars';
 
 export default class IoService extends Service {
 	public constructor(
@@ -23,8 +31,9 @@ export default class IoService extends Service {
 	) {
 		super(broker);
 		const options = { adapter: null };
-		//if (!!CACHER_REDIS) options.adapter = SocketIOAdapter(CACHER_REDIS);
-		if (!!TRANSPORTER) options.adapter = SocketIOAdapter(TRANSPORTER);
+		const adapter = !!SOCKET_IO_ADAPTER ? SOCKET_IO_ADAPTER : (!!CACHER && CACHER) || TRANSPORTER;
+		if (SocketIOAdapterNats && String(adapter).indexOf('nats:') > -1) options.adapter = SocketIOAdapterNats(adapter);
+		//else if (adapter.indexOf('redis:') > -1) options.adapter = SocketIOAdapterRedis(adapter);
 		const schema: ServiceSchema = {
 			name,
 			version: VERSION,
@@ -88,9 +97,13 @@ export default class IoService extends Service {
 									const stream = new Duplex();
 									stream.push(file);
 									stream.push(null);
-									await this.broker.call(`${VERSION}.file.save`, stream, {
-										meta: {
-											filename: name
+									await this.broker.call(
+										`${VERSION}.file.upload`,
+										stream,
+										{
+											meta: {
+												filename: name,
+											},
 										}
 									});
 									respond(null, name);
