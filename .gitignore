@@ -64,6 +64,7 @@ typings/
 .npmrc
 
 # dotenv environment variables file
+docker-compose.env
 .env
 .env.dev
 .env.local
