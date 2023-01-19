@@ -23,24 +23,25 @@ export const APP_NAME: string = process.env.APP_NAME || 'app';
 export const VERSION: string = process.env.VERSION || 'v0';
 export const LAB_TOKEN: string = process.env.LAB_TOKEN || '';
 export const LAB_APIKEY: string = process.env.LAB_APIKEY || '';
-export const TRANSPORTER: string = process.env.TRANSPORTER || '';
-export const CACHER_REDIS: string = process.env.CACHER_REDIS || '';
+export const TRANSPORTER: string = process.env.TRANSPORTER || ''; // nats://localhost:4222
+export const CACHER: string = process.env.CACHER || ''; // redis://localhost:6379
+
+// // Socket.io
+export const SOCKET_IO_ADAPTER: string = process.env.SOCKET_IO_ADAPTER || ''; // nats://localhost:4222
+export const SOCKET_IO_PORT: number = isNumeric(process.env.SOCKET_IO_PORT)
+	? Number(process.env.SOCKET_IO_PORT)
+	: 3000;
 
 // // Redis
 export const REDIS_HOST: string = process.env.REDIS_HOST || '';
 export const REDIS_PORT: number = isNumeric(process.env.REDIS_PORT)
 	? Number(process.env.REDIS_PORT)
-	: 6379; // 11888
+	: 6379;
 export const REDIS_USER: string = process.env.REDIS_USER || '';
 export const REDIS_PASSWORD: string = process.env.REDIS_PASSWORD || '';
 export const REDIS_DB_INDEX: number = isNumeric(process.env.REDIS_DB_INDEX)
 	? Number(process.env.REDIS_DB_INDEX)
 	: 0;
-
-// // Socket.io
-export const SOCKET_IO_PORT: number = isNumeric(process.env.SOCKET_IO_PORT)
-	? Number(process.env.SOCKET_IO_PORT)
-	: 3000;
 
 // // PG
 export const POSTGRES_HOST: string = process.env.POSTGRES_HOST || 'pg';
