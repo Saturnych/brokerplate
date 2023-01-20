@@ -26,6 +26,10 @@ export const LAB_APIKEY: string = process.env.LAB_APIKEY || '';
 export const TRANSPORTER: string = process.env.TRANSPORTER || ''; // nats://localhost:4222
 export const CACHER: string = process.env.CACHER || ''; // redis://localhost:6379
 
+// // Telegram
+export const TELEGRAM_TOKEN: string = process.env.TELEGRAM_TOKEN || '';
+export const TELEGRAM_CHANNEL: string = process.env.TELEGRAM_CHANNEL || '';
+
 // // Socket.io
 export const SOCKET_IO_ADAPTER: string = process.env.SOCKET_IO_ADAPTER || ''; // nats://localhost:4222
 export const SOCKET_IO_PORT: number = isNumeric(process.env.SOCKET_IO_PORT)

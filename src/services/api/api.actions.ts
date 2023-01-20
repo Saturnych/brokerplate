@@ -22,6 +22,8 @@ export type ApiHealthData = {
 export type ApiTestData = {
 	authPing: string | unknown;
 	redisKeysCount?: number;
+	tgPing?: any;
+	tgSend?: any;
 };
 
 export default {
@@ -61,6 +63,12 @@ export default {
 		params: {},
 		handler: async (ctx: Context): Promise<ApiTestData> => {
 			if (ctx.service.debug()) ctx.service.logger.info('api.test()');
+			const tgSend: any = await ctx.call(
+				`${ctx.service.version}.telegram.send`, { message: 'message from api.test()' }
+			);
+			const tgPing: string | undefined = await ctx.call(
+				`${ctx.service.version}.telegram.ping`
+			);
 			const authPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.auth.ping`
 			);
@@ -71,6 +79,8 @@ export default {
 			//const userPing = await ctx.call(`${ctx.service.version}.user.ping`);
 			//const userCount = await ctx.call(`${ctx.service.version}.user.count`);
 			return {
+				tgPing,
+				tgSend,
 				authPing,
 				redisKeysCount,
 			};

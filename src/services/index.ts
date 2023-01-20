@@ -12,6 +12,7 @@ import io from './io.service';
 import auth from './auth';
 import posts from './posts';
 import products from './products';
+import notify from './notify';
 import api from './api';
 
 export default {
@@ -20,5 +21,6 @@ export default {
 	auth,
 	posts,
 	products,
+	...notify,
 	...api,
 };

@@ -54,6 +54,7 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
+    "@d0whc3r/moleculer-telegram": "^1.2.0",
     "@moleculer/lab": "^0.6.4",
     "@types/mkdirp": "^1.0.2",
     "@types/node": "^18.11.18",
