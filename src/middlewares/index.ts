@@ -7,8 +7,10 @@
  *
  */
 
+import path from 'path';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
+import serveStatic from 'serve-static';
 
-export default [compression(), cookieParser(), helmet()];
+export default [compression(), cookieParser(), helmet(), serveStatic(path.join(__dirname, '../../public'))];
