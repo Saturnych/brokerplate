@@ -8,7 +8,7 @@
  */
 
 import { config } from 'dotenv';
-if (process.env.NODE_ENV!=='production') config();
+if (process.env.NODE_ENV !== 'production') config();
 
 import { isNumeric } from '../utils';
 
