@@ -30,6 +30,12 @@ export const CACHER: string = process.env.CACHER || ''; // redis://localhost:637
 export const TELEGRAM_TOKEN: string = process.env.TELEGRAM_TOKEN || '';
 export const TELEGRAM_CHANNEL: string = process.env.TELEGRAM_CHANNEL || '';
 
+// // Twilio
+export const TWILIO_ACCOUNT_SID: string = process.env.TWILIO_ACCOUNT_SID || '';
+export const TWILIO_AUTH_TOKEN: string = process.env.TWILIO_AUTH_TOKEN || '';
+export const TWILIO_SERVICE_NAME: string = process.env.TWILIO_SERVICE_NAME || '';
+export const TWILIO_SERVICE_CHANNEL: string = process.env.TWILIO_SERVICE_CHANNEL || '';
+
 // // Socket.io
 export const SOCKET_IO_ADAPTER: string = process.env.SOCKET_IO_ADAPTER || ''; // nats://localhost:4222
 export const SOCKET_IO_PORT: number = isNumeric(process.env.SOCKET_IO_PORT)
