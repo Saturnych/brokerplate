@@ -37,6 +37,17 @@ export const TWILIO_SERVICE_NAME: string = process.env.TWILIO_SERVICE_NAME || 'B
 export const TWILIO_SERVICE_CHANNEL: string = process.env.TWILIO_SERVICE_CHANNEL || 'sms';
 export const TWILIO_TEST_PHONE: string = process.env.TWILIO_TEST_PHONE || '';
 
+// // SMTP
+export const SMTP_HOST: string = process.env.SMTP_HOST || '';
+export const SMTP_PORT: number = isNumeric(process.env.SMTP_PORT)
+	? Number(process.env.SMTP_PORT)
+	: 465;
+export const SMTP_USER: string = process.env.SMTP_USER || '';
+export const SMTP_PASS: string = process.env.SMTP_PASS || '';
+export const SMTP_FROM_EMAIL: string = process.env.SMTP_FROM_EMAIL || '';
+export const SMTP_BCC_EMAIL: string = process.env.SMTP_BCC_EMAIL || '';
+export const RESOLVE_SERVERS: string = process.env.RESOLVE_SERVERS || '';
+
 // // Socket.io
 export const SOCKET_IO_ADAPTER: string = process.env.SOCKET_IO_ADAPTER || ''; // nats://localhost:4222
 export const SOCKET_IO_PORT: number = isNumeric(process.env.SOCKET_IO_PORT)

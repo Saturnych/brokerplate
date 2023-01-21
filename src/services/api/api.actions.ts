@@ -22,8 +22,9 @@ export type ApiHealthData = {
 export type ApiTestData = {
 	authPing: string | unknown;
 	redisKeysCount?: number;
-	tgPing?: any;
-	smsPing?: any;
+	tgPing?: string;
+	smsPing?: string;
+	emailPing?: string;
 };
 
 export default {
@@ -70,6 +71,9 @@ export default {
 			const smsPing: string | undefined = await ctx.call(`${ctx.service.version}.sms.ping`);
 			//const smsSend: any = await ctx.call(`${ctx.service.version}.sms.sendSMSCode`, { to: TWILIO_TEST_PHONE });
 
+			const emailPing: string | undefined = await ctx.call(`${ctx.service.version}.email.ping`);
+			//const emailSend: any = await ctx.call(`${ctx.service.version}.email.send`, { to: TWILIO_TEST_PHONE });
+
 			const authPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.auth.ping`
 			);
@@ -80,6 +84,7 @@ export default {
 			//const userPing = await ctx.call(`${ctx.service.version}.user.ping`);
 			//const userCount = await ctx.call(`${ctx.service.version}.user.count`);
 			return {
+				emailPing,
 				smsPing,
 				tgPing,
 				authPing,
