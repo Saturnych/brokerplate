@@ -9,8 +9,7 @@
 
 import { Errors, Context } from 'moleculer';
 import { VERSION } from '../../config/vars';
-//import emailTemplates from '../../config/email/templates';
-const emailTemplates = {};
+import emailTemplates from '../../config/email/templates';
 
 export default {
 	/**
