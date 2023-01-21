@@ -33,8 +33,9 @@ export const TELEGRAM_CHANNEL: string = process.env.TELEGRAM_CHANNEL || '';
 // // Twilio
 export const TWILIO_ACCOUNT_SID: string = process.env.TWILIO_ACCOUNT_SID || '';
 export const TWILIO_AUTH_TOKEN: string = process.env.TWILIO_AUTH_TOKEN || '';
-export const TWILIO_SERVICE_NAME: string = process.env.TWILIO_SERVICE_NAME || '';
-export const TWILIO_SERVICE_CHANNEL: string = process.env.TWILIO_SERVICE_CHANNEL || '';
+export const TWILIO_SERVICE_NAME: string = process.env.TWILIO_SERVICE_NAME || 'Brokerplate';
+export const TWILIO_SERVICE_CHANNEL: string = process.env.TWILIO_SERVICE_CHANNEL || 'sms';
+export const TWILIO_TEST_PHONE: string = process.env.TWILIO_TEST_PHONE || '';
 
 // // Socket.io
 export const SOCKET_IO_ADAPTER: string = process.env.SOCKET_IO_ADAPTER || ''; // nats://localhost:4222

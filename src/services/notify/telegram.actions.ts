@@ -41,7 +41,7 @@ export default {
 					'telegram.send() ctx.params:',
 					params,
 				);
-			if (!!params.channel) params.channel = service._initial?.channel;
+			if (!!!params.channel) params.channel = service._initial?.channel;
 			const sent = await ctx.service.actions.sendMessage(params);
 			if (service.debug())
 				service.logger.info(

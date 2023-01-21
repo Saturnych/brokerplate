@@ -11,13 +11,13 @@
 
 import twilio from 'twilio';
 
-const mixin = ({ key = 'twilio', options } = {}) => ({
+const mixin = ({ key = 'twilio', options }) => ({
   settings: {
     [key]: options,
   },
   created() {
     const { accountSid, authToken } = this.settings[key];
-    this[key] = new twilio(accountSid, authToken);
+    this[key] = twilio(accountSid, authToken);
   },
   started() {
   },

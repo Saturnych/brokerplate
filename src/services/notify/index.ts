@@ -7,8 +7,10 @@
  *
  */
 
+import sms from './sms.service';
 import telegram from './telegram.service';
 
 export default {
+	sms,
 	telegram,
 };

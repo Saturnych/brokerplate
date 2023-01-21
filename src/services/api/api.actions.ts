@@ -9,7 +9,7 @@
 
 import { Context } from 'moleculer';
 import { getPerfhookInfo } from '../../utils';
-import { VERSION } from '../../config/vars';
+import { VERSION, TWILIO_TEST_PHONE } from '../../config/vars';
 
 export type ApiHealthData = {
 	name: string;
@@ -23,7 +23,7 @@ export type ApiTestData = {
 	authPing: string | unknown;
 	redisKeysCount?: number;
 	tgPing?: any;
-	tgSend?: any;
+	smsPing?: any;
 };
 
 export default {
@@ -63,12 +63,13 @@ export default {
 		params: {},
 		handler: async (ctx: Context): Promise<ApiTestData> => {
 			if (ctx.service.debug()) ctx.service.logger.info('api.test()');
-			const tgSend: any = await ctx.call(
-				`${ctx.service.version}.telegram.send`, { message: 'message from api.test()' }
-			);
-			const tgPing: string | undefined = await ctx.call(
-				`${ctx.service.version}.telegram.ping`
-			);
+
+			const tgPing: string | undefined = await ctx.call(`${ctx.service.version}.telegram.ping`);
+			//const tgSend: any = await ctx.call(`${ctx.service.version}.telegram.send`, { message: 'message from api.test()' });
+
+			const smsPing: string | undefined = await ctx.call(`${ctx.service.version}.sms.ping`);
+			//const smsSend: any = await ctx.call(`${ctx.service.version}.sms.sendSMSCode`, { to: TWILIO_TEST_PHONE });
+
 			const authPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.auth.ping`
 			);
@@ -79,8 +80,8 @@ export default {
 			//const userPing = await ctx.call(`${ctx.service.version}.user.ping`);
 			//const userCount = await ctx.call(`${ctx.service.version}.user.count`);
 			return {
+				smsPing,
 				tgPing,
-				tgSend,
 				authPing,
 				redisKeysCount,
 			};
