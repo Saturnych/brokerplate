@@ -74,6 +74,7 @@
     "moleculer-repl": "^0.7.3",
     "moleculer-web": "^0.10.5",
     "nats": "^2.10.2",
+    "nodemailer": "^6.9.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "protobufjs": "^7.1.2",

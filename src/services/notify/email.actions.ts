@@ -53,14 +53,19 @@ export default {
 					'email.send() ctx.params:',
 					params,
 				);
+				
+			const { to, subject, email, from, bcc } = params;
+			const { html, text } = (emailTemplates && !!email.templateName && !!email.data) ? emailTemplates[email.templateName](email.data) : email;
+			const message = {
+				to,
+				subject,
+				html,
+				text,
+				from: from || service.settings.from,
+				bcc: bcc || service.settings.bcc,
+			};
 
-			const { text, html } = (emailTemplates && !!email.templateName && !!email.data) ? emailTemplates[email.templateName](email.data) : email;
-			params.text = text || '';
-			params.html = html || '';
-			if (!!!params.from) params.from = service.settings.from;
-			if (!!!params.bcc) params.bcc = service.settings.bcc;
-
-			const sent = await service.nodemailer.sendMail(params);
+			const sent = await service.nodemailer.sendMail(message);
 			if (service.debug())
 				service.logger.info(
 					'email.send() sent:',

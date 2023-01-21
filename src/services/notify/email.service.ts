@@ -9,6 +9,7 @@
 
 import { ServiceBroker } from 'moleculer';
 import BasicService from '../BasicService';
+import { parseJson } from '../../utils';
 
 import nodemailer from '../../mixins/nodemailer.mixin';
 import actions from './email.actions';

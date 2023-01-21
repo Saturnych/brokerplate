@@ -7,10 +7,12 @@
  *
  */
 
+import email from './email.service';
 import sms from './sms.service';
 import telegram from './telegram.service';
 
 export default {
+	email,
 	sms,
 	telegram,
 };
