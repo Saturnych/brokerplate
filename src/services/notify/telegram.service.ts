@@ -40,10 +40,5 @@ export default class TelegramService extends BasicService {
 			settings,
 			actions,
 		});
-
-		this._initial = {
-			channel: TELEGRAM_CHANNEL,
-			token: TELEGRAM_TOKEN,
-		};
 	}
 };

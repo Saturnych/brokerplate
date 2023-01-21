@@ -18,7 +18,15 @@ export default {
 	ping: {
 		version: VERSION,
 		params: {},
-		handler: async (ctx: Context): Promise<string> => Promise.resolve('pong'),
+		handler: async (ctx: Context): Promise<string> => {
+			const { service } = ctx;
+			if (service.debug())
+				service.logger.info(
+					'telegram.ping() service.settings.telegramExtraInfo:',
+					service.settings.telegramExtraInfo,
+				);
+			return service.settings.telegramExtraInfo ? Promise.resolve('pong') : Promise.reject('');
+		},
 	},
 
 	/**
@@ -41,8 +49,9 @@ export default {
 					'telegram.send() ctx.params:',
 					params,
 				);
-			if (!!!params.channel) params.channel = service._initial?.channel;
-			const sent = await ctx.service.actions.sendMessage(params);
+				
+			if (!!!params.channel) params.channel = service.settings.telegramChannel;
+			const sent = await service.actions.sendMessage(params);
 			if (service.debug())
 				service.logger.info(
 					'telegram.send() sent:',
