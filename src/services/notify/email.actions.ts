@@ -25,9 +25,9 @@ export default {
 			if (service.debug())
 				service.logger.info(
 					'email.ping() service.settings.host:',
-					service.settings.host, service.nodemailer,
+					service.settings.host
 				);
-			return service.settings.host ? Promise.resolve('pong') : Promise.reject('');
+			return service.nodemailer && !!service.settings.host ? Promise.resolve('pong') : Promise.reject('');
 		},
 	},
 
@@ -53,7 +53,7 @@ export default {
 					'email.send() ctx.params:',
 					params,
 				);
-				
+
 			const { to, subject, email, from, bcc } = params;
 			const { html, text } = (emailTemplates && !!email.templateName && !!email.data) ? emailTemplates[email.templateName](email.data) : email;
 			const message = {
