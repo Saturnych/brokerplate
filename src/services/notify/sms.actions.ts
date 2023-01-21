@@ -24,10 +24,10 @@ export default {
 			const { service } = ctx;
 			if (service.debug())
 				service.logger.info(
-					'sms.ping() ctx.service.twilio.accountSid:',
+					'sms.ping() service.twilio.accountSid:',
 					service.twilio.accountSid,
 				);
-			return Promise.resolve('pong');
+			return !!service.twilio.accountSid ? Promise.resolve('pong') : Promise.reject('');
 		},
 	},
 
@@ -52,8 +52,8 @@ export default {
 				);
 
 			const { verify } = service.twilio;
-			const { sid } = await verify.services.create({ friendlyName: service._initial?.serviceName });
-			if (!!!params.channel) params.channel = service._initial?.serviceChannel;
+			const { sid } = await verify.services.create({ friendlyName: service.settings.serviceName });
+			if (!!!params.channel) params.channel = service.settings.serviceChannel;
 
 			const sendVerifyCode = await verify.services(sid)
 				.verifications

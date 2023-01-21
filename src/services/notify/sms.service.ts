@@ -39,10 +39,5 @@ export default class SmsService extends BasicService {
 			mixins,
 			actions,
 		});
-
-		this._initial = {
-			serviceName: TWILIO_SERVICE_NAME,
-			serviceChannel: TWILIO_SERVICE_CHANNEL,
-		};
 	}
 };
