@@ -72,7 +72,7 @@ export default {
 			//const smsSend: any = await ctx.call(`${ctx.service.version}.sms.sendSMSCode`, { to: TWILIO_TEST_PHONE });
 
 			const emailPing: string | undefined = await ctx.call(`${ctx.service.version}.email.ping`);
-			//const emailSend: any = await ctx.call(`${ctx.service.version}.email.send`, { to: TWILIO_TEST_PHONE });
+			//const emailSend: any = await ctx.call(`${ctx.service.version}.email.send`, { to: 'd@saturnych.ru', subject: 'test', email: { text: '', html: 'hi!' } });
 
 			const authPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.auth.ping`
