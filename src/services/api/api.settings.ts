@@ -25,7 +25,7 @@ export default {
 
 	// Serve assets from 'public' folder
 	assets: {
-		folder: 'public',
+		folder: '../../../public',
 		// Options to `server-static` module
 		options: {},
 	},
