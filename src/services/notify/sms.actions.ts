@@ -25,9 +25,11 @@ export default {
 			if (service.debug())
 				service.logger.info(
 					'sms.ping() service.twilio.accountSid:',
-					service.twilio.accountSid,
+					service.twilio.accountSid
 				);
-			return !!service.twilio.accountSid ? Promise.resolve('pong') : Promise.reject('');
+			return service.twilio.accountSid
+				? Promise.resolve("pong")
+				: Promise.reject("");
 		},
 	},
 
@@ -42,27 +44,27 @@ export default {
 			channel: 'string|optional',
 		},
 		handler: async (
-			ctx: Context<{ to: string; channel?: string; }>
-		): Promise<Record<string,any>> => {
+			ctx: Context<{ to: string; channel?: string }>
+		): Promise<Record<string, any>> => {
 			const { params, service } = ctx;
 			if (service.debug())
-				service.logger.info(
-					'sms.sendSMSCode() ctx.params:',
-					params,
-				);
+				service.logger.info('sms.sendSMSCode() ctx.params:', params);
 
 			const { verify } = service.twilio;
-			const { sid } = await verify.services.create({ friendlyName: service.settings.serviceName });
-			if (!!!params.channel) params.channel = service.settings.serviceChannel;
+			const { sid } = await verify.services.create({
+				friendlyName: service.settings.serviceName,
+			});
+			if (!params.channel)
+				params.channel = service.settings.serviceChannel;
 
-			const sendVerifyCode = await verify.services(sid)
-				.verifications
-		    .create(params)
-		    .catch((err) => console.error(err));
+			const sendVerifyCode = await verify
+				.services(sid)
+				.verifications.create(params)
+				.catch((err) => console.error(err));
 			if (service.debug())
 				service.logger.info(
 					'sms.sendSMSCode() sendVerifyCode:',
-					sendVerifyCode,
+					sendVerifyCode
 				);
 			return sendVerifyCode;
 		},
@@ -80,24 +82,20 @@ export default {
 			sid: 'string',
 		},
 		handler: async (
-			ctx: Context<{ to: string; code: string; sid: string; }>
+			ctx: Context<{ to: string; code: string; sid: string }>
 		): Promise<boolean> => {
 			const { params, service } = ctx;
 			if (service.debug())
-				service.logger.info(
-					'sms.verifySMSCode() ctx.params:',
-					params,
-				);
+				service.logger.info('sms.verifySMSCode() ctx.params:', params);
 
 			const { verify } = service.twilio;
 			const { sid, ...pars } = params;
 
-		  const verificationCheck = await verify.services(sid)
-		    .verificationChecks
-		    .create(pars)
+			const verificationCheck = await verify
+				.services(sid)
+				.verificationChecks.create(pars)
 				.catch((err) => console.error(err));
-		  return verificationCheck?.status === SUCCESS_STATUS;
+			return verificationCheck?.status === SUCCESS_STATUS;
 		},
 	},
-
 };

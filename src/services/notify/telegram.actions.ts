@@ -23,9 +23,11 @@ export default {
 			if (service.debug())
 				service.logger.info(
 					'telegram.ping() service.settings.telegramExtraInfo:',
-					service.settings.telegramExtraInfo,
+					service.settings.telegramExtraInfo
 				);
-			return service.settings.telegramExtraInfo ? Promise.resolve('pong') : Promise.reject('');
+			return service.settings.telegramExtraInfo
+				? Promise.resolve('pong')
+				: Promise.reject('');
 		},
 	},
 
@@ -41,24 +43,18 @@ export default {
 			token: 'string|optional',
 		},
 		handler: async (
-			ctx: Context<{ message: string; channel?: string; token?: string; }>
-		): Promise<Record<string,any>> => {
+			ctx: Context<{ message: string; channel?: string; token?: string }>
+		): Promise<Record<string, any>> => {
 			const { params, service } = ctx;
 			if (service.debug())
-				service.logger.info(
-					'telegram.send() ctx.params:',
-					params,
-				);
-				
-			if (!!!params.channel) params.channel = service.settings.telegramChannel;
+				service.logger.info('telegram.send() ctx.params:', params);
+
+			if (!params.channel)
+				params.channel = service.settings.telegramChannel;
 			const sent = await service.actions.sendMessage(params);
 			if (service.debug())
-				service.logger.info(
-					'telegram.send() sent:',
-					sent,
-				);
+				service.logger.info('telegram.send() sent:', sent);
 			return sent;
 		},
 	},
-
 };

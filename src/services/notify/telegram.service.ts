@@ -13,20 +13,17 @@ import BasicService from '../BasicService';
 
 import actions from './telegram.actions';
 
-import {
-	TELEGRAM_TOKEN,
-	TELEGRAM_CHANNEL,
-} from '../../config/vars';
+import { TELEGRAM_TOKEN, TELEGRAM_CHANNEL } from '../../config/vars';
 
-const mixins = [ TelegramMixin ];
+const mixins = [TelegramMixin];
 
 const settings = {
-  telegramToken: TELEGRAM_TOKEN,
-  telegramChannel: TELEGRAM_CHANNEL,
-  telegramExtraInfo: {
-    parse_mode: 'Markdown',
-    disable_web_page_preview: true
-  }
+	telegramToken: TELEGRAM_TOKEN,
+	telegramChannel: TELEGRAM_CHANNEL,
+	telegramExtraInfo: {
+		parse_mode: 'Markdown',
+		disable_web_page_preview: true,
+	},
 };
 
 export default class TelegramService extends BasicService {
@@ -41,4 +38,4 @@ export default class TelegramService extends BasicService {
 			actions,
 		});
 	}
-};
+}

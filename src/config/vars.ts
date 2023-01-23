@@ -31,17 +31,20 @@ export const TELEGRAM_TOKEN: string = process.env.TELEGRAM_TOKEN || '';
 export const TELEGRAM_CHANNEL: string = process.env.TELEGRAM_CHANNEL || '';
 
 // // FCM
-export const FCM_DEBUG: boolean = !!process.env.FCM_DEBUG;
+export const FCM_DEBUG = !!process.env.FCM_DEBUG;
 export const FCM_PROJECT_ID: string = process.env.FCM_PROJECT_ID || '';
 export const FCM_SENDER_ID: string = process.env.FCM_SENDER_ID || '';
 export const FCM_TOPIC: string = process.env.FCM_TOPIC || '';
-export const FCM_SERVICE_ACCOUNT: string = process.env.FCM_SERVICE_ACCOUNT || '';
+export const FCM_SERVICE_ACCOUNT: string =
+	process.env.FCM_SERVICE_ACCOUNT || '';
 
 // // Twilio
 export const TWILIO_ACCOUNT_SID: string = process.env.TWILIO_ACCOUNT_SID || '';
 export const TWILIO_AUTH_TOKEN: string = process.env.TWILIO_AUTH_TOKEN || '';
-export const TWILIO_SERVICE_NAME: string = process.env.TWILIO_SERVICE_NAME || 'Brokerplate';
-export const TWILIO_SERVICE_CHANNEL: string = process.env.TWILIO_SERVICE_CHANNEL || 'sms';
+export const TWILIO_SERVICE_NAME: string =
+	process.env.TWILIO_SERVICE_NAME || 'Brokerplate';
+export const TWILIO_SERVICE_CHANNEL: string =
+	process.env.TWILIO_SERVICE_CHANNEL || 'sms';
 export const TWILIO_TEST_PHONE: string = process.env.TWILIO_TEST_PHONE || '';
 
 // // SMTP

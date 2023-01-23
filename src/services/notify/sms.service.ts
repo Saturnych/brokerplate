@@ -28,7 +28,8 @@ const options = {
 };
 
 const mixins = [];
-if (!!options.accountSid && !!options.authToken) mixins.push(twilio({ options }));
+if (!!options.accountSid && !!options.authToken)
+	mixins.push(twilio({ options }));
 
 export default class SmsService extends BasicService {
 	public constructor(
@@ -41,4 +42,4 @@ export default class SmsService extends BasicService {
 			actions,
 		});
 	}
-};
+}

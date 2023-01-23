@@ -31,7 +31,7 @@ const options = {
 };
 
 const mixins = [];
-if (!!options.projectId) mixins.push(fcm({ options }));
+if (options.projectId) mixins.push(fcm({ options }));
 
 export default class PushService extends BasicService {
 	public constructor(
@@ -44,4 +44,4 @@ export default class PushService extends BasicService {
 			actions,
 		});
 	}
-};
+}

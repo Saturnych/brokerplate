@@ -12,17 +12,15 @@
 import nodemailer from 'nodemailer';
 
 const mixin = ({ key = 'nodemailer', options }) => ({
-  settings: {
-    [key]: options,
-  },
-  created() {
-    const { host, port, secure, auth } = this.settings[key];
-    this[key] = nodemailer.createTransport({ host, port, secure, auth });
-  },
-  started() {
-  },
-  stopped() {
-  },
+	settings: {
+		[key]: options,
+	},
+	created() {
+		const { host, port, secure, auth } = this.settings[key];
+		this[key] = nodemailer.createTransport({ host, port, secure, auth });
+	},
+	started() {},
+	stopped() {},
 });
 
 export default mixin;

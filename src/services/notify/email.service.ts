@@ -21,23 +21,27 @@ import {
 	SMTP_PASS,
 	SMTP_FROM_EMAIL,
 	SMTP_BCC_EMAIL,
-	RESOLVE_SERVERS
+	RESOLVE_SERVERS,
 } from '../../config/vars';
 
 const options = {
 	host: SMTP_HOST,
 	port: SMTP_PORT, // 465 or 587
-	secure: (SMTP_PORT===465)?true:false, // true for 465, false for other ports
+	secure: SMTP_PORT === 465 ? true : false, // true for 465, false for other ports
 	auth: {
 		user: SMTP_USER,
 		pass: SMTP_PASS,
 	},
 	from: SMTP_FROM_EMAIL,
 	bcc: SMTP_BCC_EMAIL,
-	resolve: !!RESOLVE_SERVERS ? (Array.isArray(RESOLVE_SERVERS)?RESOLVE_SERVERS:parseJson(RESOLVE_SERVERS, [])):[],
+	resolve: RESOLVE_SERVERS
+		? Array.isArray(RESOLVE_SERVERS)
+			? RESOLVE_SERVERS
+			: parseJson(RESOLVE_SERVERS, [])
+		: [],
 };
 
-const mixins = [ nodemailer({ options }) ];
+const mixins = [nodemailer({ options })];
 
 export default class EmailService extends BasicService {
 	public constructor(
@@ -51,4 +55,4 @@ export default class EmailService extends BasicService {
 			settings: options,
 		});
 	}
-};
+}

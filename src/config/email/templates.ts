@@ -1,13 +1,13 @@
 const config = {
-  title: 'Brokerplate',
-  href: 'https://bro.saturnych.ru',
-  contact: 'i@saturnych.ru',
-  name: 'Denis Glebko',
+	title: 'Brokerplate',
+	href: 'https://bro.saturnych.ru',
+	contact: 'i@saturnych.ru',
+	name: 'Denis Glebko',
 };
 
-const imgLogo = ``;
+const imgLogo = "";
 
-const trPinLine = `<tr width="100%"><td class="block-line"></td></tr>`;
+const trPinLine = '<tr width="100%"><td class="block-line"></td></tr>';
 
 const styles = `
 <style type="text/css">
@@ -169,13 +169,18 @@ const footer = `
 </html>
 `;
 
-const linkButton = (link: string, text: string): string => `<a class="btn-accept" href="${link}" target="_blank">${text}</a>`;
+const linkButton = (link: string, text: string): string =>
+	`<a class="btn-accept" href="${link}" target="_blank">${text}</a>`;
 
 const emailTemplates = {
-  resetPassword: ({ firstName, buttonLink = '', buttonText = 'Reset password' }) => {
-    return {
-      text: ``,
-      html: `
+	resetPassword: ({
+		firstName,
+		buttonLink = '',
+		buttonText = 'Reset password',
+	}) => {
+		return {
+			text: '',
+			html: `
         ${header}
         <tr>
           <td style="padding-top: 24px; text-align: center;" align="center"></td>
@@ -183,22 +188,26 @@ const emailTemplates = {
         <tr>
           <td class="text">
             <h4>Hi, ${firstName}!</h4>
-            <p class="text-info">We received a request to reset the password for your ${config.title} app account. To proceed, click the “Reset Password” button below.</p>
-            <p class="text-info">If you did not initiate this request, please contact us at <a href="mailto:${config.contact}" style="color: #5C24E3">${config.contact}</a>.</p>
+            <p class="text-info">We received a request to reset the password for your ${
+				config.title
+			} app account. To proceed, click the “Reset Password” button below.</p>
+            <p class="text-info">If you did not initiate this request, please contact us at <a href="mailto:${
+				config.contact
+			}" style="color: #5C24E3">${config.contact}</a>.</p>
             ${cheers}
             ${linkButton(buttonLink, 'Reset password')}
           </td>
         </tr>
         ${footer}
       `,
-    };
-  },
+		};
+	},
 
-  enterPin: ({ firstName, pin }) => {
-    pin = String(pin).replace(/ /g, '').trim();
-    return {
-      text: ``,
-      html: `
+	enterPin: ({ firstName, pin }) => {
+		pin = String(pin).replace(/ /g, '').trim();
+		return {
+			text: '',
+			html: `
         ${header}
         ${trPinLine}
         <tr>
@@ -212,13 +221,13 @@ const emailTemplates = {
         </tr>
         ${footer}
       `,
-    };
-  },
-  
-  error: ({ firstName, errorName, error = '' }) => {
-    return {
-      text: `${errorName}: ${JSON.stringify(error)}`,
-      html: `
+		};
+	},
+
+	error: ({ firstName, errorName, error = '' }) => {
+		return {
+			text: `${errorName}: ${JSON.stringify(error)}`,
+			html: `
         ${header}
         <tr>
         <td class="text" style="padding-top: 24px;">
@@ -230,8 +239,8 @@ const emailTemplates = {
         </tr>
         ${footer}
       `,
-    };
-  },
+		};
+	},
 };
 
 export default emailTemplates;

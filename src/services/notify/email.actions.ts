@@ -26,7 +26,9 @@ export default {
 					'email.ping() service.settings.host:',
 					service.settings.host
 				);
-			return service.nodemailer && !!service.settings.host ? Promise.resolve('pong') : Promise.reject('');
+			return service.nodemailer && !!service.settings.host
+				? Promise.resolve('pong')
+				: Promise.reject('');
 		},
 	},
 
@@ -44,17 +46,23 @@ export default {
 			bcc: 'string|optional',
 		},
 		handler: async (
-			ctx: Context<{ to: string; subject: string; email: Record<string,any>; from?: string; bcc?: string; }>
-		): Promise<Record<string,any>> => {
+			ctx: Context<{
+				to: string;
+				subject: string;
+				email: Record<string, any>;
+				from?: string;
+				bcc?: string;
+			}>
+		): Promise<Record<string, any>> => {
 			const { params, service } = ctx;
 			if (service.debug())
-				service.logger.info(
-					'email.send() ctx.params:',
-					params,
-				);
+				service.logger.info('email.send() ctx.params:', params);
 
 			const { to, subject, email, from, bcc } = params;
-			const { html, text } = (emailTemplates && !!email.templateName && !!email.data) ? emailTemplates[email.templateName](email.data) : email;
+			const { html, text } =
+				emailTemplates && !!email.templateName && !!email.data
+					? emailTemplates[email.templateName](email.data)
+					: email;
 			const message = {
 				to,
 				subject,
@@ -66,12 +74,8 @@ export default {
 
 			const sent = await service.nodemailer.sendMail(message);
 			if (service.debug())
-				service.logger.info(
-					'email.send() sent:',
-					sent,
-				);
+				service.logger.info('email.send() sent:', sent);
 			return sent;
 		},
 	},
-
 };
