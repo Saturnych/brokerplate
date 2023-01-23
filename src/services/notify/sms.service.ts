@@ -27,7 +27,8 @@ const options = {
 	serviceChannel: TWILIO_SERVICE_CHANNEL,
 };
 
-const mixins = [ twilio({ options }) ];
+const mixins = [];
+if (!!options.accountSid && !!options.authToken) mixins.push(twilio({ options }));
 
 export default class SmsService extends BasicService {
 	public constructor(

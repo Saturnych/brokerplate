@@ -97,7 +97,7 @@ export const parseJson = (data: string, json = {}) => {
 	try {
 		json = JSON.parse(data);
 	} catch (err) {
-		console.error(err);
+		//console.error(err);
 	}
 	return json;
 };

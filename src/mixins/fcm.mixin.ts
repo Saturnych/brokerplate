@@ -11,7 +11,7 @@
 
 import admin from 'firebase-admin';
 
-const mixin = ({ key = 'fcm', options } = {}) => ({
+const mixin = ({ key = 'fcm', options }) => ({
   settings: {
     [key]: options,
   },
@@ -23,9 +23,10 @@ const mixin = ({ key = 'fcm', options } = {}) => ({
         projectId: projectId,
         appId: projectId,
         messagingSenderId: senderId,
-        topic // "/topics/[a-zA-Z0-9-_.~%]+"
+        credential: null,
+        topic, // "/topics/[a-zA-Z0-9-_.~%]+"
     };
-    if (serviceAccount && Object.keys(serviceAccount).length>0) firebaseConfig.credential = admin.credential.cert(serviceAccount);
+    if (Object.keys(serviceAccount).length>0) firebaseConfig.credential = admin.credential.cert(serviceAccount);
     admin.initializeApp(firebaseConfig);
     this[key] = admin.messaging();
   },

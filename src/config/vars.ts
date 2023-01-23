@@ -30,6 +30,13 @@ export const CACHER: string = process.env.CACHER || ''; // redis://localhost:637
 export const TELEGRAM_TOKEN: string = process.env.TELEGRAM_TOKEN || '';
 export const TELEGRAM_CHANNEL: string = process.env.TELEGRAM_CHANNEL || '';
 
+// // FCM
+export const FCM_DEBUG: boolean = !!process.env.FCM_DEBUG;
+export const FCM_PROJECT_ID: string = process.env.FCM_PROJECT_ID || '';
+export const FCM_SENDER_ID: string = process.env.FCM_SENDER_ID || '';
+export const FCM_TOPIC: string = process.env.FCM_TOPIC || '';
+export const FCM_SERVICE_ACCOUNT: string = process.env.FCM_SERVICE_ACCOUNT || '';
+
 // // Twilio
 export const TWILIO_ACCOUNT_SID: string = process.env.TWILIO_ACCOUNT_SID || '';
 export const TWILIO_AUTH_TOKEN: string = process.env.TWILIO_AUTH_TOKEN || '';
@@ -77,7 +84,7 @@ export const POSTGRES_DB: string = process.env.POSTGRES_DB || 'test';
 export const POSTGRES_URI: string = process.env.POSTGRES_URI || '';
 
 // // MongoDB
-export const MONGO_URI: string = process.env.MONGO_URI || '';
+export const MONGODB_URI: string = process.env.MONGODB_URI || '';
 
 // // Passwords
 export const SALT_WORK_FACTOR: number = isNumeric(process.env.SALT_WORK_FACTOR)

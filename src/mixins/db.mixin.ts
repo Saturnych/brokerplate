@@ -16,7 +16,7 @@ import DbService from 'moleculer-db';
 import MongoAdapter from 'moleculer-db-adapter-mongo';
 import SqlAdapter from 'moleculer-db-adapter-sequelize';
 
-import { NODE_ENV, DEBUG, POSTGRES_URI, MONGO_URI } from '../config/vars';
+import { NODE_ENV, DEBUG, POSTGRES_URI, MONGODB_URI } from '../config/vars';
 
 export default class Connection
 	implements Partial<ServiceSchema>, ThisType<Service>
@@ -83,9 +83,9 @@ export default class Connection
 			// PG adapter
 			this.schema.adapter = new SqlAdapter(POSTGRES_URI);
 			this.schema.collection = this.collection;
-		} else if (MONGO_URI) {
+		} else if (MONGODB_URI) {
 			// Mongo adapter
-			this.schema.adapter = new MongoAdapter(MONGO_URI); // , { useUnifiedTopology: true }
+			this.schema.adapter = new MongoAdapter(MONGODB_URI); // , { useUnifiedTopology: true }
 			this.schema.collection = this.collection;
 		} else if (!!NODE_ENV && NODE_ENV.indexOf('test') > -1) {
 			// NeDB memory adapter for testing

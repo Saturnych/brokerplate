@@ -11,7 +11,7 @@
 
 import Redis from 'ioredis';
 
-const RedisMixin = ({ key = 'redis', options = {} } = {}) => ({
+const RedisMixin = ({ key = 'redis', options }) => ({
   settings: {
     [key]: options,
   },
