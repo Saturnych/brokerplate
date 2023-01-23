@@ -70,8 +70,8 @@ export default {
 			const queuePing: string | undefined = await ctx.call(
 				`${ctx.service.version}.queue.ping`
 			);
-			const queueCreateJob: any = await ctx.call(`${ctx.service.version}.queue.createJob`, { name: `${VERSION}.email.send`, data: { id: 1, from: SMTP_FROM_EMAIL } });
-			if (ctx.service.debug()) ctx.service.logger.info('queueCreateJob():', queueCreateJob.queue.name);
+			//const queueCreateJob: any = await ctx.call(`${ctx.service.version}.queue.createJob`, { name: `${VERSION}.email.send`, data: { id: 1, from: SMTP_FROM_EMAIL } });
+			//if (ctx.service.debug()) ctx.service.logger.info('queueCreateJob():', queueCreateJob.queue.name);
 
 			const tgPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.telegram.ping`
