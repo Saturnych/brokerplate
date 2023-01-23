@@ -25,6 +25,7 @@ export type ApiTestData = {
 	tgPing?: string;
 	smsPing?: string;
 	emailPing?: string;
+	pushPing?: string;
 };
 
 export default {
@@ -81,6 +82,8 @@ export default {
 				`${ctx.service.version}.auth.keys`
 			);
 			const redisKeysCount: number = redisKeys?.length || 0;
+
+			//const pushPing: string | undefined = await ctx.call(`${ctx.service.version}.push.ping`);
 			//const userPing = await ctx.call(`${ctx.service.version}.user.ping`);
 			//const userCount = await ctx.call(`${ctx.service.version}.user.count`);
 			return {
