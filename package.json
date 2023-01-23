@@ -68,6 +68,7 @@
     "jsonwebtoken": "^9.0.0",
     "mkdirp": "^1.0.4",
     "moleculer": "^0.14.28",
+    "moleculer-bee-queue": "^0.1.10",
     "moleculer-db": "^0.8.21",
     "moleculer-db-adapter-mongo": "^0.4.16",
     "moleculer-db-adapter-sequelize": "^0.2.15",

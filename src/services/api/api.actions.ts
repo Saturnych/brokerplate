@@ -9,7 +9,7 @@
 
 import { Context } from 'moleculer';
 import { getPerfhookInfo } from '../../utils';
-import { VERSION, TWILIO_TEST_PHONE } from '../../config/vars';
+import { VERSION, TWILIO_TEST_PHONE, SMTP_FROM_EMAIL } from '../../config/vars';
 
 export type ApiHealthData = {
 	name: string;
@@ -26,6 +26,7 @@ export type ApiTestData = {
 	smsPing?: string;
 	emailPing?: string;
 	pushPing?: string;
+	queuePing?: string;
 };
 
 export default {
@@ -66,6 +67,12 @@ export default {
 		handler: async (ctx: Context): Promise<ApiTestData> => {
 			if (ctx.service.debug()) ctx.service.logger.info('api.test()');
 
+			const queuePing: string | undefined = await ctx.call(
+				`${ctx.service.version}.queue.ping`
+			);
+			const queueCreateJob: any = await ctx.call(`${ctx.service.version}.queue.createJob`, { name: `${VERSION}.email.send`, data: { id: 1, from: SMTP_FROM_EMAIL } });
+			if (ctx.service.debug()) ctx.service.logger.info('queueCreateJob():', queueCreateJob.queue.name);
+
 			const tgPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.telegram.ping`
 			);
@@ -79,7 +86,7 @@ export default {
 			const emailPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.email.ping`
 			);
-			//const emailSend: any = await ctx.call(`${ctx.service.version}.email.send`, { to: 'd@saturnych.ru', subject: 'test', email: { text: '', html: 'hi!' } });
+			//const emailSend: any = await ctx.call(`${ctx.service.version}.email.send`, { to: SMTP_FROM_EMAIL, subject: 'test', email: { text: '', html: 'hi!' } });
 
 			const authPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.auth.ping`
@@ -93,6 +100,7 @@ export default {
 			//const userPing = await ctx.call(`${ctx.service.version}.user.ping`);
 			//const userCount = await ctx.call(`${ctx.service.version}.user.count`);
 			return {
+				queuePing,
 				emailPing,
 				smsPing,
 				tgPing,
