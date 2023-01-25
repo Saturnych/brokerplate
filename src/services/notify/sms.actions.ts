@@ -24,12 +24,12 @@ export default {
 			const { service } = ctx;
 			if (service.debug())
 				service.logger.info(
-					'sms.ping() service.twilio.accountSid:',
-					service.twilio.accountSid
+					'sms.ping() service.twilio.serviceName:',
+					service.twilio.serviceName
 				);
-			return service.twilio.accountSid
-				? Promise.resolve("pong")
-				: Promise.reject("");
+			return service.twilio.serviceName
+				? Promise.resolve('pong')
+				: Promise.reject('');
 		},
 	},
 

@@ -39,19 +39,17 @@ export default {
 		version: VERSION,
 		params: {
 			message: 'string',
-			channel: 'string|optional',
-			token: 'string|optional',
+			chat: 'string|optional',
 		},
 		handler: async (
-			ctx: Context<{ message: string; channel?: string; token?: string }>
+			ctx: Context<{ message: string; chat?: string; }>
 		): Promise<Record<string, any>> => {
 			const { params, service } = ctx;
 			if (service.debug())
 				service.logger.info('bot.send() ctx.params:', params);
 
-			if (!params.channel)
-				params.channel = service.settings.botAdmin;
-			const sent = await service.actions.sendMessage(params);
+			if (!params.chat) params.chat = service.settings.botAdmin;
+			const sent = await service.telegraf.telegram.sendMessage(params.chat, params.message);
 			if (service.debug())
 				service.logger.info('bot.send() sent:', sent);
 			return sent;

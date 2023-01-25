@@ -23,6 +23,7 @@ export type ApiTestData = {
 	authPing: string | unknown;
 	redisKeysCount?: number;
 	tgPing?: string;
+	botPing?: string;
 	smsPing?: string;
 	emailPing?: string;
 	pushPing?: string;
@@ -73,14 +74,18 @@ export default {
 			//const queueCreateJob: any = await ctx.call(`${ctx.service.version}.queue.createJob`, { name: `${VERSION}.email.send`, data: { id: 1, from: SMTP_FROM_EMAIL } });
 			//if (ctx.service.debug()) ctx.service.logger.info('queueCreateJob():', queueCreateJob.queue.name);
 
+			const botPing: string | undefined = await ctx.call(
+				`${ctx.service.version}.bot.ping`
+			);
+			//const botSend: any = await ctx.call(`${ctx.service.version}.bot.send`, { message: 'message from api.test()' });
+
 			const tgPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.telegram.ping`
 			);
 			//const tgSend: any = await ctx.call(`${ctx.service.version}.telegram.send`, { message: 'message from api.test()' });
 
-			const smsPing: string | undefined = await ctx.call(
-				`${ctx.service.version}.sms.ping`
-			);
+			const smsPing: string = '';
+			//const smsPing: string | undefined = await ctx.call(`${ctx.service.version}.sms.ping`);
 			//const smsSend: any = await ctx.call(`${ctx.service.version}.sms.sendSMSCode`, { to: TWILIO_TEST_PHONE });
 
 			const emailPing: string | undefined = await ctx.call(
@@ -103,6 +108,7 @@ export default {
 				queuePing,
 				emailPing,
 				smsPing,
+				botPing,
 				tgPing,
 				authPing,
 				redisKeysCount,

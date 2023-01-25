@@ -47,8 +47,8 @@ export default class BotService extends BasicService {
 				bot.command('hipster', Telegraf.reply('λ'));
 				bot.on('sticker', (ctx) => ctx.reply('👍'));
 				bot.hears('hi', (ctx) => ctx.reply('Hey there'));
-				bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
-				bot.action("delete", ctx => ctx.deleteMessage());
+				bot.on('message', ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
+				bot.action('delete', ctx => ctx.deleteMessage());
 				bot.command('quit', async (ctx) => {
 					await ctx.reply(JSON.stringify(ctx.message));
 				});
