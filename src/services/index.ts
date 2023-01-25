@@ -9,6 +9,7 @@
 
 import lab from './lab.service';
 import io from './io.service';
+import bot from './bot';
 import auth from './auth';
 import queue from './queue';
 import posts from './posts';
@@ -19,6 +20,7 @@ import api from './api';
 export default {
 	lab,
 	io,
+	bot,
 	auth,
 	queue,
 	posts,
