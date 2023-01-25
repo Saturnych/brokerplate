@@ -55,4 +55,21 @@ export default {
 			return sent;
 		},
 	},
+
+	test: {
+		version: VERSION,
+		params: {
+			message: 'string|optional',
+		},
+		handler: async (
+			ctx: Context<{ message?: string; }>
+		): Promise<void> => {
+			const { params, service } = ctx;
+			if (service.debug())
+				service.logger.info('bot.test() ctx.params:', params);
+
+			//service.telegraf.hears('test', (ctx) => ctx.reply('Testing...'));
+			//service.telegraf.command('test', (ctx) => ctx.reply('Testing...'));
+		},
+	},
 };

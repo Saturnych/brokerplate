@@ -45,6 +45,8 @@ const mixin = ({ key = 'telegraf', options }) => ({
 		process.once('SIGTERM', () => this[key].stop('SIGTERM'));
 	},
 	started() {
+		const { debug } = this.settings[key];
+		if (debug) console.info('telegraf started');
 	},
 	stopped() {
 		this[key].stop('SERVICESTOPPED');

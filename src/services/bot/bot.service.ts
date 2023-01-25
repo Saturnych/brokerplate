@@ -29,6 +29,27 @@ const keyboard = Markup.inlineKeyboard([
 	Markup.button.callback("Delete", "delete"),
 ]);
 
+const initBot = (bot, pingId?: string, pingMessage?: string): void => {
+	bot.start((ctx) => ctx.reply(ctx.startPayload)); // ERROR!
+	bot.help((ctx) => ctx.reply('Send me a sticker'));
+	bot.command('oldschool', (ctx) => ctx.reply('Hello'));
+	bot.command('hipster', Telegraf.reply('λ'));
+	bot.on('sticker', (ctx) => ctx.reply('👍'));
+	bot.hears('hi', (ctx) => ctx.reply('Hey there'));
+	//bot.on('message', ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
+	//bot.action('delete', ctx => ctx.deleteMessage());
+	bot.command('quit', async (ctx) => {
+		await ctx.reply(JSON.stringify(ctx.message));
+	});
+	bot.on('text', async (ctx) => {
+		ctx.session ??= { messageCount: 0 };
+		ctx.session.messageCount++;
+		await ctx.reply(`Seen ${ctx.session.messageCount} messages.`);
+	});
+	bot.launch();
+	if (!!pingId && !!pingMessage) bot.telegram.sendMessage(pingId, pingMessage);
+};
+
 export default class BotService extends BasicService {
 	public constructor(
 		public broker: ServiceBroker,
@@ -40,25 +61,16 @@ export default class BotService extends BasicService {
 			actions,
 			settings: options,
 			started: () => {
-				const bot = this.telegraf;
-				bot.start((ctx) => ctx.reply(ctx.startPayload)); // ERROR!
-				bot.help((ctx) => ctx.reply('Send me a sticker'));
-				bot.command('oldschool', (ctx) => ctx.reply('Hello'));
-				bot.command('hipster', Telegraf.reply('λ'));
-				bot.on('sticker', (ctx) => ctx.reply('👍'));
-				bot.hears('hi', (ctx) => ctx.reply('Hey there'));
-				bot.on('message', ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
-				bot.action('delete', ctx => ctx.deleteMessage());
-				bot.command('quit', async (ctx) => {
-					await ctx.reply(JSON.stringify(ctx.message));
-				});
-				bot.on('text', async (ctx) => {
-					ctx.session ??= { messageCount: 0 };
-					ctx.session.messageCount++;
-					await ctx.reply(`Seen ${ctx.session.messageCount} messages.`);
-				});
-				bot.launch();
+				initBot(this.telegraf, options.botAdmin, 'bot started');
 			},
 		});
+	}
+
+	public botStop(msg = 'BOTSTOPPED') {
+		this.telegraf.stop(msg);
+	}
+
+	public botInit() {
+		initBot(this.telegraf, options.botAdmin, 'botInit()');
 	}
 }
