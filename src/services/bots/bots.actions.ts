@@ -8,7 +8,9 @@
  */
 
 import { Errors, Context } from 'moleculer';
-import { VERSION } from '../../config/vars';
+import { VERSION, TELEGRAM_TOKEN, TELEGRAM_CHANNEL } from '../../config/vars';
+
+const botId: string = TELEGRAM_TOKEN?.indexOf(':')>0 ? TELEGRAM_TOKEN.split(':')[0] : '';
 
 export default {
 	/**
@@ -22,10 +24,10 @@ export default {
 			const { service } = ctx;
 			if (service.debug())
 				service.logger.info(
-					'bot.ping() service.settings.botAdmin:',
-					service.settings.botAdmin
+					'bot.ping() service.settings:',
+					service.settings.telegraf, service.telegraf
 				);
-			return service.settings.botAdmin
+			return service.settings.telegraf
 				? Promise.resolve('pong')
 				: Promise.reject('');
 		},
@@ -43,16 +45,19 @@ export default {
 		},
 		handler: async (
 			ctx: Context<{ message: string; chat?: string; }>
-		): Promise<Record<string, any>> => {
+		): Promise<Record<string, any> | void> => {
 			const { params, service } = ctx;
 			if (service.debug())
 				service.logger.info('bot.send() ctx.params:', params);
 
-			if (!params.chat) params.chat = service.settings.botAdmin;
-			const sent = await service.telegraf.telegram.sendMessage(params.chat, params.message);
-			if (service.debug())
-				service.logger.info('bot.send() sent:', sent);
-			return sent;
+			if (!!botId) {
+				if (!params.chat) params.chat = TELEGRAM_CHANNEL;
+				if (service.debug())
+					service.logger.info('bot.send() telegram.testEnv:', service.telegraf.bots[botId].telegram.testEnv);
+				const sent = await service.telegraf.bots[botId].telegram.sendMessage(params.chat, params.message);
+				if (service.debug()) service.logger.info('bot.send() sent:', sent);
+				return sent;
+			}
 		},
 	},
 

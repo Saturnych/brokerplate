@@ -7,9 +7,9 @@
  *
  */
 
-import lab from './lab.service';
 import io from './io.service';
-import bot from './bot';
+import lab from './lab.service';
+import bots from './bots';
 import auth from './auth';
 import queue from './queue';
 import posts from './posts';
@@ -18,9 +18,9 @@ import notify from './notify';
 import api from './api';
 
 export default {
-	lab,
 	io,
-	bot,
+	lab,
+	bots,
 	auth,
 	queue,
 	posts,

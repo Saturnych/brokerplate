@@ -7,6 +7,6 @@
  *
  */
 
-import bot from './bot.service';
+import bots from './bots.service';
 
-export default bot;
+export default bots;
