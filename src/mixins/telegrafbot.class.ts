@@ -37,7 +37,7 @@ export default class TelegrafBot {
 		this.bot.use(async (ctx, next) => {
 			this._ctx = ctx;
 			if (opts.debug) console.time(`Processing update ${ctx.update.update_id}`);
-			if (opts.debug) console.info(ctx.update);
+			if (opts.debug) console.info(JSON.stringify(ctx.update));
 			await next(); // runs next middleware
 			// runs after next middleware finishes
 			if (opts.debug) console.timeEnd(`Processing update ${ctx.update.update_id}`);
