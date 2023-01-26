@@ -56,10 +56,9 @@ botOpts.handlers = {
 	on: {
 		sticker: ctx => ctx.reply('👍'),
 		message: ctx => {
-			if (Number(ctx.message.chat.id)>0)
-			ctx.copyMessage(ctx.message.chat.id, keyboards['url-delete']);
-			else
-			ctx.reply('FUCK OFF!');
+			if (Number(ctx.message.chat.id)>0) {
+				ctx.copyMessage(ctx.message.chat.id, keyboards['url-delete']);
+			}
 		},
 		text: async (ctx) => {
 			ctx.session ??= { messageCount: 0 };
