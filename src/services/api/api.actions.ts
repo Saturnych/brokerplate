@@ -77,7 +77,7 @@ export default {
 			const botPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.bots.ping`
 			);
-			//const botSend: any = await ctx.call(`${ctx.service.version}.bots.send`, { message: 'message from api.test()' });
+			const botSend: any = await ctx.call(`${ctx.service.version}.bots.send`, { message: 'message from api.test()' });
 
 			const tgPing: string | undefined = await ctx.call(
 				`${ctx.service.version}.telegram.ping`

@@ -19,18 +19,6 @@ interface BotContext extends Context {
 	session?: BotSession;
 };
 
-const initBot = (bot, handlers): void => {
-	for (let route of Object.keys(handlers)) {
-		if (['start','help'].includes(route)) {
-			bot[route](handlers[route]);
-		} else {
-			for (let type of Object.keys(handlers[route])) {
-				bot[route](type, handlers[route][type]);
-			}
-		}
-	}
-};
-
 export default class TelegrafBot {
 	private _id: string;
 	private _token: string;
@@ -40,8 +28,8 @@ export default class TelegrafBot {
 
 	public constructor(public opts: Record<string, any>) {
 		this._id = String(opts.id);
-		this._token = opts.token;
-		this._admin = opts.admin;
+		this._token = String(opts.token);
+		this._admin = String(opts.admin);
 		this.bot = new Telegraf<BotContext>(opts.token);
 
 		// Make session data available
@@ -56,18 +44,34 @@ export default class TelegrafBot {
 		});
 
 		this.bot.catch((err) => {
-			console.error(err?.response, err?.on);
+			console.error('err.response:', err?.response, 'err.on:', err?.on);
 		});
 		process.once('SIGINT', () => this.bot.stop('SIGINT'));
 		process.once('SIGTERM', () => this.bot.stop('SIGTERM'));
 
-		initBot(this.bot, opts.handlers);
-		this.bot.telegram.sendMessage(opts.admin, `bot #${opts.id} initialized`);
+		this.init(this.bot, opts.handlers);
+		const sent = this.sendAdmin(`bot #${opts.id} initialized`);
 
 		this.bot.launch();
 	}
 
-	public stop(msg = 'BOTSTOPPED') {
+	private init(bot, handlers): void {
+		for (let route of Object.keys(handlers)) {
+			if (['start','help'].includes(route)) {
+				bot[route](handlers[route]);
+			} else {
+				for (let type of Object.keys(handlers[route])) {
+					bot[route](type, handlers[route][type]);
+				}
+			}
+		}
+	}
+
+	public sendAdmin(msg): Record<string, any> {
+		return this.bot.telegram.sendMessage(this._admin, msg);
+	}
+
+	public stop(msg = 'BOTSTOPPED'): void {
 		this.bot.stop(msg);
 	}
 

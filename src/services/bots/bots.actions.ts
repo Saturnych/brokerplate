@@ -8,9 +8,7 @@
  */
 
 import { Errors, Context } from 'moleculer';
-import { VERSION, TELEGRAM_TOKEN, TELEGRAM_CHANNEL } from '../../config/vars';
-
-const botId: string = TELEGRAM_TOKEN?.indexOf(':')>0 ? TELEGRAM_TOKEN.split(':')[0] : '';
+import { VERSION, TELEGRAM_TOKEN } from '../../config/vars';
 
 export default {
 	/**
@@ -25,9 +23,9 @@ export default {
 			if (service.debug())
 				service.logger.info(
 					'bots.ping() service.settings:',
-					service.settings.telegraf, service.telegraf
+					service.settings.telegraf
 				);
-			return service.settings.telegraf
+			return service.settings.telegraf && service.telegraf
 				? Promise.resolve('pong')
 				: Promise.reject('');
 		},
@@ -41,20 +39,24 @@ export default {
 		version: VERSION,
 		params: {
 			message: 'string',
+			bot: 'string|optional',
 			chat: 'string|optional',
 		},
 		handler: async (
-			ctx: Context<{ message: string; chat?: string; }>
+			ctx: Context<{ message: string; bot?: string; chat?: string; }>
 		): Promise<Record<string, any> | void> => {
 			const { params, service } = ctx;
 			if (service.debug())
 				service.logger.info('bots.send() ctx.params:', params);
 
+			const botId: string = params.bot || (TELEGRAM_TOKEN?.indexOf(':')>0 ? TELEGRAM_TOKEN.split(':')[0] : '');
 			if (!!botId) {
-				if (!params.chat) params.chat = TELEGRAM_CHANNEL;
-				const sent = await service.telegraf.bots[botId].telegram.sendMessage(params.chat, params.message);
+				const sent = await service.telegraf.bots[botId].sendAdmin(params.message);
 				if (service.debug()) service.logger.info('bots.send() sent:', sent);
 				return sent;
+				/*
+					{ message_id: 1234, from: { id: 123456789, is_bot: true, first_name: 'Bot', username: 'Bot' }, chat: { id: 987654321, first_name: 'User', username: 'User', type: 'private' }, date: 1674744103, text: 'message from api.test()' }
+				*/
 			}
 		},
 	},
