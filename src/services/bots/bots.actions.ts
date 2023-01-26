@@ -24,7 +24,7 @@ export default {
 			const { service } = ctx;
 			if (service.debug())
 				service.logger.info(
-					'bot.ping() service.settings:',
+					'bots.ping() service.settings:',
 					service.settings.telegraf, service.telegraf
 				);
 			return service.settings.telegraf
@@ -48,14 +48,12 @@ export default {
 		): Promise<Record<string, any> | void> => {
 			const { params, service } = ctx;
 			if (service.debug())
-				service.logger.info('bot.send() ctx.params:', params);
+				service.logger.info('bots.send() ctx.params:', params);
 
 			if (!!botId) {
 				if (!params.chat) params.chat = TELEGRAM_CHANNEL;
-				if (service.debug())
-					service.logger.info('bot.send() telegram.testEnv:', service.telegraf.bots[botId].telegram.testEnv);
 				const sent = await service.telegraf.bots[botId].telegram.sendMessage(params.chat, params.message);
-				if (service.debug()) service.logger.info('bot.send() sent:', sent);
+				if (service.debug()) service.logger.info('bots.send() sent:', sent);
 				return sent;
 			}
 		},
@@ -72,9 +70,6 @@ export default {
 			const { params, service } = ctx;
 			if (service.debug())
 				service.logger.info('bot.test() ctx.params:', params);
-
-			//service.telegraf.hears('test', (ctx) => ctx.reply('Testing...'));
-			//service.telegraf.command('test', (ctx) => ctx.reply('Testing...'));
 		},
 	},
 };

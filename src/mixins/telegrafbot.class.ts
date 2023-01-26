@@ -5,11 +5,11 @@
  * @author Denis Glebko <saturnych@gmail.com>
  * @copyright Denis Glebko 2022
  *
- * @mixin BotMixin
+ * @class TelegrafBot
  *
  */
 
-import { session, Context, Telegraf, Markup } from 'telegraf';
+import { session, Context, Telegraf, Telegram } from 'telegraf';
 
 interface BotSession {
 	messageCount?: number;
@@ -19,29 +19,16 @@ interface BotContext extends Context {
 	session?: BotSession;
 };
 
-const keyboard = Markup.inlineKeyboard([
-	Markup.button.url("❤️", "http://telegraf.js.org"),
-	Markup.button.callback("Delete", "delete"),
-]);
-
-const initBot = (bot, pingId?: string, pingMessage?: string): void => {
-	bot.start((ctx) => ctx.reply(ctx.startPayload)); // ERROR!
-	bot.help((ctx) => ctx.reply('Send me a sticker'));
-	bot.command('oldschool', (ctx) => ctx.reply('Hello'));
-	bot.command('hipster', Telegraf.reply('λ'));
-	bot.on('sticker', (ctx) => ctx.reply('👍'));
-	bot.hears('hi', (ctx) => ctx.reply('Hey there'));
-	//bot.on('message', ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
-	//bot.action('delete', ctx => ctx.deleteMessage());
-	bot.command('quit', async (ctx) => {
-		await ctx.reply(JSON.stringify(ctx.message));
-	});
-	bot.on('text', async (ctx) => {
-		ctx.session ??= { messageCount: 0 };
-		ctx.session.messageCount++;
-		await ctx.reply(`Seen ${ctx.session.messageCount} messages.`);
-	});
-	if (!!pingId && !!pingMessage) bot.telegram.sendMessage(pingId, pingMessage);
+const initBot = (bot, handlers): void => {
+	for (let route of Object.keys(handlers)) {
+		if (['start','help'].includes(route)) {
+			bot[route](handlers[route]);
+		} else {
+			for (let type of Object.keys(handlers[route])) {
+				bot[route](type, handlers[route][type]);
+			}
+		}
+	}
 };
 
 export default class TelegrafBot {
@@ -60,7 +47,7 @@ export default class TelegrafBot {
 		// Make session data available
 		this.bot.use(session());
 		this.bot.use(async (ctx, next) => {
-			this.ctx = ctx;
+			this._ctx = ctx;
 			if (opts.debug) console.time(`Processing update ${ctx.update.update_id}`);
 			if (opts.debug) console.info(ctx.update);
 			await next(); // runs next middleware
@@ -69,12 +56,13 @@ export default class TelegrafBot {
 		});
 
 		this.bot.catch((err) => {
-			console.error(err); // err.response, err.on
+			console.error(err?.response, err?.on);
 		});
 		process.once('SIGINT', () => this.bot.stop('SIGINT'));
 		process.once('SIGTERM', () => this.bot.stop('SIGTERM'));
 
-		initBot(this.bot, opts.admin, `bot #${opts.id} initialized`);
+		initBot(this.bot, opts.handlers);
+		this.bot.telegram.sendMessage(opts.admin, `bot #${opts.id} initialized`);
 
 		this.bot.launch();
 	}
@@ -87,19 +75,11 @@ export default class TelegrafBot {
 		return this._id;
 	}
 
-	private set id(id: string) {
-		this._id = id;
-	}
-
 	public get ctx(): BotContext {
 		return this._ctx;
 	}
 
-	private set ctx(context: BotContext) {
-		this._ctx = context;
-	}
-
-	public get telegram() {
+	public get telegram(): Telegram {
 		return this.bot.telegram;
 	}
 

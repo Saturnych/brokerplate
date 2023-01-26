@@ -25,15 +25,13 @@ const mixin = ({ key = 'telegraf', options }) => ({
 		};
 	},
 	started() {
-		if (options.debug) {
-			for (let id of Object.keys(options)) {
-		    this[key].bots[id].telegram.sendMessage(options[id].admin, `bot #${id} started`);
-			}
+		for (let id of Object.keys(options)) {
+			if (options[id].debug) this[key].bots[id].telegram.sendMessage(options[id].admin, `bot #${id} started`);
 		}
 	},
 	stopped() {
 		for (let id of Object.keys(options)) {
-			if (options.debug) this[key].bots[id].telegram.sendMessage(options[id].admin, `bot #${id} stopped`);
+			if (options[id].debug) this[key].bots[id].telegram.sendMessage(options[id].admin, `bot #${id} stopped`);
 			this[key].bots[id].stop('SERVICESTOPPED');
 		}
 	},
