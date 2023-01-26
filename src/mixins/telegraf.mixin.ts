@@ -27,29 +27,35 @@ const mixin = ({ key = 'telegraf', options }) => ({
 		[key]: options,
 	},
 	created() {
-		const { debug, botToken } = this.settings[key];
-		this[key] = new Telegraf<BotContext>(botToken);
+		const { debug, botToken, botId } = this.settings[key];
+		this[key] = {
+			bots: {},
+		};
+
+		const bot = new Telegraf<BotContext>(botToken);
 		// Make session data available
-		this[key].use(session());
-		this[key].use(async (ctx, next) => {
+		bot.use(session());
+		bot.use(async (ctx, next) => {
 		  if (debug) console.time(`Processing update ${ctx.update.update_id}`);
 			if (debug) console.info(ctx.update);
 		  await next(); // runs next middleware
 		  // runs after next middleware finishes
 		  if (debug) console.timeEnd(`Processing update ${ctx.update.update_id}`);
 		});
-		this[key].catch((err) => {
-		  console.error(err.response, err.on);
+		bot.catch((err) => {
+		  console.error(err); // err.response, err.on
 		});
-		process.once('SIGINT', () => this[key].stop('SIGINT'));
-		process.once('SIGTERM', () => this[key].stop('SIGTERM'));
+		process.once('SIGINT', () => bot.stop('SIGINT'));
+		process.once('SIGTERM', () => bot.stop('SIGTERM'));
+		this[key].bots[botId] = bot;
 	},
 	started() {
-		const { debug } = this.settings[key];
-		if (debug) console.info('telegraf started');
+		const { debug, botId, botAdmin } = this.settings[key];
+		if (debug) this[key].bots[botId].telegram.sendMessage(botAdmin, `bot ${botId} started`);
 	},
 	stopped() {
-		this[key].stop('SERVICESTOPPED');
+		const { botId } = this.settings[key];
+		this[key].bots[botId].stop('SERVICESTOPPED');
 	},
 });
 

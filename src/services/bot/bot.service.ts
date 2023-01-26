@@ -19,6 +19,7 @@ import { DEBUG, TELEGRAM_TOKEN, TELEGRAM_CHANNEL } from '../../config/vars';
 const options = {
 	debug: DEBUG,
 	botToken: TELEGRAM_TOKEN,
+	botId: TELEGRAM_TOKEN.split(':')[0],
 	botAdmin: TELEGRAM_CHANNEL,
 };
 
@@ -61,16 +62,16 @@ export default class BotService extends BasicService {
 			actions,
 			settings: options,
 			started: () => {
-				initBot(this.telegraf, options.botAdmin, 'bot started');
+				initBot(this.telegraf.bots[options.botId], options.botAdmin, 'bot started');
 			},
 		});
 	}
 
 	public botStop(msg = 'BOTSTOPPED') {
-		this.telegraf.stop(msg);
+		this.telegraf.bots[options.botId].stop(msg);
 	}
 
 	public botInit() {
-		initBot(this.telegraf, options.botAdmin, 'botInit()');
+		initBot(this.telegraf.bots[options.botId], options.botAdmin, `bot ${options.botId} init()`);
 	}
 }
