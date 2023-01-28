@@ -13,7 +13,7 @@ const route = {
 	path: `/${VERSION}/file`,
 	whitelist: [`${VERSION}.file.*`],
 	authentication: true,
-	authorization: true, 
+	authorization: true,
 	autoAliases: false,
 	aliases: {
 		'POST /': `multipart:${VERSION}.file.multi`,

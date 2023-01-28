@@ -13,25 +13,33 @@ import TelegrafBot from './telegrafbot.class';
 
 const mixin = ({ key = 'telegraf', options }) => ({
 	settings: {
-		[key]: options
+		[key]: options,
 	},
 	created() {
 		const bots = {};
-		for (let id of Object.keys(options)) {
-	    bots[id] = new TelegrafBot(options[id])
+		for (const id of Object.keys(options)) {
+			bots[id] = new TelegrafBot(options[id]);
 		}
 		this[key] = {
-			bots
+			bots,
 		};
 	},
 	started() {
-		for (let id of Object.keys(options)) {
-			if (options[id].debug) this[key].bots[id].telegram.sendMessage(options[id].admin, `bot #${id} started`);
+		for (const id of Object.keys(options)) {
+			if (options[id].debug)
+				this[key].bots[id].telegram.sendMessage(
+					options[id].admin,
+					`bot #${id} started`
+				);
 		}
 	},
 	stopped() {
-		for (let id of Object.keys(options)) {
-			if (options[id].debug) this[key].bots[id].telegram.sendMessage(options[id].admin, `bot #${id} stopped`);
+		for (const id of Object.keys(options)) {
+			if (options[id].debug)
+				this[key].bots[id].telegram.sendMessage(
+					options[id].admin,
+					`bot #${id} stopped`
+				);
 			this[key].bots[id].stop('SERVICESTOPPED');
 		}
 	},

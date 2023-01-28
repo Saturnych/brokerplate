@@ -13,11 +13,11 @@ import { session, Context, Telegraf, Telegram } from 'telegraf';
 
 interface BotSession {
 	messageCount?: number;
-};
+}
 
 interface BotContext extends Context {
 	session?: BotSession;
-};
+}
 
 export default class TelegrafBot {
 	private _id: string;
@@ -36,11 +36,13 @@ export default class TelegrafBot {
 		this.bot.use(session());
 		this.bot.use(async (ctx, next) => {
 			this._ctx = ctx;
-			if (opts.debug) console.time(`Processing update ${ctx.update.update_id}`);
+			if (opts.debug)
+				console.time(`Processing update ${ctx.update.update_id}`);
 			if (opts.debug) console.info(JSON.stringify(ctx.update));
 			await next(); // runs next middleware
 			// runs after next middleware finishes
-			if (opts.debug) console.timeEnd(`Processing update ${ctx.update.update_id}`);
+			if (opts.debug)
+				console.timeEnd(`Processing update ${ctx.update.update_id}`);
 		});
 
 		this.bot.catch((err) => {
@@ -56,11 +58,11 @@ export default class TelegrafBot {
 	}
 
 	private init(bot, handlers): void {
-		for (let route of Object.keys(handlers)) {
-			if (['start','help'].includes(route)) {
+		for (const route of Object.keys(handlers)) {
+			if (['start', 'help'].includes(route)) {
 				bot[route](handlers[route]);
 			} else {
-				for (let type of Object.keys(handlers[route])) {
+				for (const type of Object.keys(handlers[route])) {
 					bot[route](type, handlers[route][type]);
 				}
 			}
@@ -86,5 +88,4 @@ export default class TelegrafBot {
 	public get telegram(): Telegram {
 		return this.bot.telegram;
 	}
-
 }
