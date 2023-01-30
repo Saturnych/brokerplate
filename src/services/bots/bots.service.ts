@@ -36,7 +36,7 @@ const keyboards = {
 };
 
 botOpts.handlers = {
-	start: ctx => ctx.reply('MENU:', keyboards['first-second']), // ctx.startPayload => GOT ERROR!
+	start: ctx => ctx.reply('MENU:', keyboards['first-second']), // ctx.startPayload => GOT ERROR! // 'MENU:', keyboards['first-second'] 
 	help: ctx => {
 	  ctx.reply('Send /start to receive a message with a keyboard');
 		ctx.reply('Send /oldschool to receive a greeting');
@@ -54,15 +54,21 @@ botOpts.handlers = {
 		second: ctx => ctx.reply('second action'),
 	},
 	on: {
-		sticker: ctx => ctx.reply('👍'),
+		sticker: ctx => {
+			ctx.session.messageCount++;
+			console.log('sticker session:', ctx.session);
+			ctx.reply('👍');
+		},
 		message: ctx => {
+			ctx.session.messageCount++;
+			console.log('message session:', ctx.session);
 			if (Number(ctx.message.chat.id)>0) {
 				ctx.copyMessage(ctx.message.chat.id, keyboards['url-delete']);
 			}
 		},
 		text: async (ctx) => {
-			ctx.session ??= { messageCount: 0 };
 			ctx.session.messageCount++;
+			console.log('text session:', ctx.session);
 			await ctx.reply(`Seen ${ctx.session.messageCount} messages.`);
 		},
 	},

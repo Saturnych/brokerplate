@@ -29,7 +29,7 @@ const mixin = ({ key = 'telegraf', options }) => ({
 			if (options[id].debug)
 				this[key].bots[id].telegram.sendMessage(
 					options[id].admin,
-					`bot #${id} started`
+					`Bot #${id} started`
 				);
 		}
 	},
@@ -38,7 +38,7 @@ const mixin = ({ key = 'telegraf', options }) => ({
 			if (options[id].debug)
 				this[key].bots[id].telegram.sendMessage(
 					options[id].admin,
-					`bot #${id} stopped`
+					`Bot #${id} stopped`
 				);
 			this[key].bots[id].stop('SERVICESTOPPED');
 		}
