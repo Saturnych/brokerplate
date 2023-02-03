@@ -15,8 +15,9 @@ import { Context, Service, ServiceSchema } from 'moleculer';
 import DbService from 'moleculer-db';
 import MongoAdapter from 'moleculer-db-adapter-mongo';
 import SqlAdapter from 'moleculer-db-adapter-sequelize';
+import OrientAdapter from 'moleculer-db-adapter-orientdb';
 
-import { NODE_ENV, DEBUG, POSTGRES_URI, MONGODB_URI } from '../config/vars';
+import { NODE_ENV, DEBUG, POSTGRES_URI, MONGODB_URI, ORIENTDB_HOST, ORIENTDB_PORT } from '../config/vars';
 
 export default class Connection
 	implements Partial<ServiceSchema>, ThisType<Service>
@@ -79,11 +80,15 @@ export default class Connection
 	}
 
 	public start() {
-		if (POSTGRES_URI) {
+		if (!!ORIENTDB_HOST && !!ORIENTDB_PORT) {
+			// OrientDB adapter
+			this.schema.adapter = new OrientDBAdapter({ host: ORIENTDB_HOST, port: ORIENTDB_PORT });
+			//this.schema.dataClass = 'Test';
+		} else if (!!POSTGRES_URI) {
 			// PG adapter
 			this.schema.adapter = new SqlAdapter(POSTGRES_URI);
 			this.schema.collection = this.collection;
-		} else if (MONGODB_URI) {
+		} else if (!!MONGODB_URI) {
 			// Mongo adapter
 			this.schema.adapter = new MongoAdapter(MONGODB_URI); // , { useUnifiedTopology: true }
 			this.schema.collection = this.collection;

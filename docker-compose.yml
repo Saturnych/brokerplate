@@ -122,6 +122,17 @@ services:
     networks:
       - internal
 
+  orientdb:
+    image: orientdb:latest
+    env_file: docker-compose.env
+    environment:
+      ORIENTDB_ROOT_PASSWORD: root
+    ports:
+      - 2424:2424
+      - 2480:2480
+    networks:
+      - internal
+
   nats:
     image: nats:2
     networks:

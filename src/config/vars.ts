@@ -75,8 +75,19 @@ export const REDIS_DB_INDEX: number = isNumeric(process.env.REDIS_DB_INDEX)
 	? Number(process.env.REDIS_DB_INDEX)
 	: 0;
 
+// // OrientDB
+export const ORIENTDB_HOST: string = process.env.ORIENTDB_HOST || '';
+export const ORIENTDB_PORT: number = isNumeric(process.env.ORIENTDB_PORT)
+	? Number(process.env.ORIENTDB_PORT)
+	: 2424;
+export const ORIENTDB_ROOT_USER: string = process.env.ORIENTDB_ROOT_USER || 'root';
+export const ORIENTDB_ROOT_PASSWORD: string = process.env.ORIENTDB_ROOT_PASSWORD || 'root';
+export const ORIENTDB_DB_USER: string = process.env.ORIENTDB_DB_USER || 'admin';
+export const ORIENTDB_DB_PASSWORD: string = process.env.ORIENTDB_DB_PASSWORD || 'admin';
+export const ORIENTDB_DB_NAME: string = process.env.ORIENTDB_DB_NAME || '';
+
 // // PG
-export const POSTGRES_HOST: string = process.env.POSTGRES_HOST || 'pg';
+export const POSTGRES_HOST: string = process.env.POSTGRES_HOST || '';
 export const POSTGRES_PORT: number = isNumeric(process.env.POSTGRES_PORT)
 	? Number(process.env.POSTGRES_PORT)
 	: 5432;
