@@ -71,6 +71,7 @@
     "moleculer-bee-queue": "^0.1.10",
     "moleculer-db": "^0.8.21",
     "moleculer-db-adapter-mongo": "^0.4.16",
+    "moleculer-db-adapter-orientdb": "^0.12.0",
     "moleculer-db-adapter-sequelize": "^0.2.15",
     "moleculer-io": "^2.2.0",
     "moleculer-repl": "^0.7.3",
