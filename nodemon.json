@@ -1,7 +1,7 @@
 {
   "verbose": true,
   "delay": "1000",
-  "ignore": ["data/*", "node_modules/*"],
+  "ignore": ["./data/*", "./node_modules/*"],
   "watch": ["./*"],
   "ext": "ts,mts,js,mjs,json,env",
   "exec": "npm run dev:app",
