@@ -55,7 +55,7 @@ services:
       PORT: 2002
     depends_on:
         api:
-          condition: service_healthy
+          condition: service_started
         nats:
           condition: service_started
         redis:
@@ -72,7 +72,7 @@ services:
     environment:
       NODEID: postsNode
       SERVICEDIR: app/dist/src/services/posts
-      PORT: 2003
+      PORT: 2004
     depends_on:
         postgres:
           condition: service_healthy
@@ -90,10 +90,42 @@ services:
     environment:
       NODEID: productsNode
       SERVICEDIR: app/dist/src/services/products
-      PORT: 2004
+      PORT: 2005
     depends_on:
         postgres:
           condition: service_healthy
+        nats:
+          condition: service_started
+    networks:
+      - default
+      - gateway
+
+  queue:
+    build:
+      context: .
+    image: queue
+    env_file: docker-compose.env
+    environment:
+      NODEID: queueNode
+      SERVICEDIR: app/dist/src/services/queue
+      PORT: 2006
+    depends_on:
+        nats:
+          condition: service_started
+    networks:
+      - default
+      - gateway
+
+  notify:
+    build:
+      context: .
+    image: notify
+    env_file: docker-compose.env
+    environment:
+      NODEID: notifyNode
+      SERVICEDIR: app/dist/src/services/notify
+      PORT: 2007
+    depends_on:
         nats:
           condition: service_started
     networks:

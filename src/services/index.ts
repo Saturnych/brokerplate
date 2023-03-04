@@ -11,7 +11,7 @@ import io from './io.service';
 import lab from './lab.service';
 //import bots from './bots';
 import auth from './auth';
-//import queue from './queue';
+import queue from './queue';
 import posts from './posts';
 import products from './products';
 import notify from './notify';
@@ -22,7 +22,7 @@ export default {
 	lab,
 	//bots,
 	auth,
-	//queue,
+	queue,
 	posts,
 	products,
 	...notify,
