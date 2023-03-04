@@ -22,7 +22,7 @@ export default {
 			const { service } = ctx;
 			if (service.debug())
 				service.logger.info(
-					'queue.ping() service.settings.retries:',
+					'bee.ping() service.settings.retries:',
 					service.settings.retries
 				);
 			return service.settings.retries
@@ -46,7 +46,7 @@ export default {
 			const { params, service } = ctx;
 			if (service.debug())
 				service.logger.info(
-					'queue.getQueue() params:',
+					'bee.getQueue() params:',
 					params
 				);
 			return service.getQueue(params.name);
@@ -69,7 +69,7 @@ export default {
 		): Promise<any> => {
 			const { params, service } = ctx;
 			if (service.debug())
-				service.logger.info('queue.createJob() params:', params);
+				service.logger.info('bee.createJob() params:', params);
 
 			if (!!!params.retries)
 				params.retries = service.settings.retries;

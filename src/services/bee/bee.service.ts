@@ -12,7 +12,7 @@ import { ServiceBroker } from 'moleculer';
 import QueueMixin from 'moleculer-bee-queue';
 import BasicService from '../BasicService';
 
-import actions from './queue.actions';
+import actions from './bee.actions';
 
 import {
 	VERSION,
@@ -22,23 +22,22 @@ import {
 	REDIS_PORT,
 } from '../../config/vars';
 
-const mixins = [QueueMixin({
+const settings = {
+	retries: 2,
 	redis: {
     host: REDIS_HOST,
 		port: REDIS_PORT,
 	}
-})];
-
-const settings = {
-	retries: 2,
 };
+
+const mixins = [QueueMixin(settings)];
 
 const emailSend = `${VERSION}.email.send`;
 
-export default class QueueService extends BasicService {
+export default class BeeService extends BasicService {
 	public constructor(
 		public broker: ServiceBroker,
-		public name: string = 'queue'
+		public name: string = 'bee'
 	) {
 		super(broker, {
 			name,

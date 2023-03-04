@@ -7,6 +7,6 @@
  *
  */
 
-import queue from './queue.service';
+import bee from './bee.service';
 
-export default queue;
+export default bee;

@@ -10,7 +10,7 @@ services:
     environment:
       NODEID: labNode
       SERVICES: lab.service
-      PORT: 3210
+      LAB_PORT: 3210
     ports:
       - 3210:3210
     depends_on:
@@ -100,14 +100,14 @@ services:
       - default
       - gateway
 
-  queue:
+  bee:
     build:
       context: .
-    image: queue
+    image: bee
     env_file: docker-compose.env
     environment:
-      NODEID: queueNode
-      SERVICEDIR: app/dist/src/services/queue
+      NODEID: beeNode
+      SERVICEDIR: app/dist/src/services/bee
       PORT: 2006
     depends_on:
         nats:
