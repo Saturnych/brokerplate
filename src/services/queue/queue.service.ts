@@ -18,9 +18,16 @@ import {
 	VERSION,
 	SMTP_FROM_EMAIL,
 	SMTP_BCC_EMAIL,
+	REDIS_HOST,
+	REDIS_PORT,
 } from '../../config/vars';
 
-const mixins = [QueueMixin()];
+const mixins = [QueueMixin({
+	redis: {
+    host: REDIS_HOST,
+		port: REDIS_PORT,
+	}
+})];
 
 const settings = {
 	retries: 2,
